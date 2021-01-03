@@ -19,7 +19,7 @@ UNSAKEY=[link: https://unsplash.com/developers]
 UNSSKEY=[link: https://unsplash.com/developers]
 UNSRDC=[link: https://unsplash.com/developers]</pre>
 3. Убедитесь, что у Вас установлены необходимые пакеты. Если что, смотрите файлы - <code>bot_d.py, keep_alive.py и pyproject.toml</code>
-4. Пошаманить хоть как-то...
+<br>4. Пошаманить хоть как-то...
 <br>5. И наконец-то запускаем.
 <p>Для работы бота в круглосуточном режиме, рекомендуется использовать хостинг репозиториев Repl.it и пинг-сервис Freshping.
 <p>Присутствуют английский и русский языки. Вопросы к работе бота направляйте через Issues.
