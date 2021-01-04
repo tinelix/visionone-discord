@@ -10,6 +10,7 @@ discord = "^1.0.1"
 flask = "^1.1.2"
 python-dotenv = "^0.15.0"
 python-unsplash = ""
+numexpr = "^2.7.2"
 
 [tool.poetry.dev-dependencies]
 

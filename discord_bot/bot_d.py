@@ -12,6 +12,7 @@ from sqlite3 import Error
 from discord.ext import commands
 from .discord_botconfig import botconfig
 import keep_alive
+import numexpr
 
 from unsplash.api import Api as unsplash_api
 from unsplash.auth import Auth
@@ -20,6 +21,7 @@ from .d_commands.state import state_cmd
 from .d_commands.eval import eval_cmd
 from .d_commands.settings import settings_cmd
 from .d_commands.photo import photo_cmd
+from .d_commands.calc import calc_cmd
 import discord_bot.d_commands.set as settings
 import discord_bot.d_commands.profile as profile
 import discord_bot.d_events.cooldown as cooldown
@@ -90,7 +92,7 @@ async def on_ready():
 
 @bot.event
 async def on_guild_join(guild):
-    game = discord.Game(str(len(bot.guilds)) + " g. | =help", type=discord.ActivityType.watching)
+    game = discord.Game(str(len(bot.guilds)) + " guilds | =help", type=discord.ActivityType.watching)
     await bot.change_presence(status=discord.Status.dnd, activity=game)
     try:
       cursor.execute("SELECT * FROM blacklist_guilds WHERE guildid='" + str(guild.id) + "';")
@@ -182,6 +184,9 @@ async def on_message(message):
         print(e)
         guild = [(message.guild.id, str(message.guild.region), 0, unix_time_millis(message.created_at), "Enabled", "Standart", "=")]
         bot_data = [(0, 0)]
+        exc_type, exc_value, exc_tb = sys.exc_info()
+        ex = traceback.format_exception(exc_type, exc_value, exc_tb)
+        await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
     
     cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
     # print(user)
@@ -206,7 +211,7 @@ async def on_message(message):
                 else:
                   await help_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, en_US.get(), botconfig['accent1'])
             if message.content.startswith(botconfig['prefix'] + 'state'):
-                await state_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color)
+                await state_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color, connection, cursor)
             if message.content.startswith(botconfig['prefix'] + 'eval'):
                 await eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, en_US, guild_result, intents, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'clock'):
@@ -251,15 +256,18 @@ async def on_message(message):
                     print(e)
             if message.content.startswith(botconfig['prefix'] + 'photo'):
                 await photo_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, unsplash, time_diff, bot_data_result, cursor, connection, embed_color)
+            if message.content.startswith(botconfig['prefix'] + 'calc'):
+                await calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr)
       except Exception as e:
-        exc_type, exc_value, exc_tb = sys.exc_info()
-        ex = traceback.format_exception(exc_type, exc_value, exc_tb)
-        await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
-        if str(e) == "local variable 'localization' referenced before assignment":
-          dbregistred_content = discord.Embed(title="База данных пользователя", description="База данных пользователя зарегистрирована, пишите команду еще раз.", color=botconfig['accent1'])
-          return await message.channel.send(embed=dbregistred_content)
-        if str(e) == "list index out of range":
-          pass
-        errorcode = discord.Embed(title="Something went wrong...", description="This bug was reported to the bot developer.\n\n```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "```", color=botconfig['accent1'])
-        await message.channel.send(embed=errorcode)
+        if message.content.startswith(botconfig['prefix']):
+          exc_type, exc_value, exc_tb = sys.exc_info()
+          ex = traceback.format_exception(exc_type, exc_value, exc_tb)
+          await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
+          if str(e) == "local variable 'localization' referenced before assignment" or str(e) == "'NoneType' object is not subscriptable":
+            dbregistred_content = discord.Embed(title="База данных пользователя", description="База данных пользователя зарегистрирована, пишите команду еще раз.", color=botconfig['accent1'])
+            return await message.channel.send(embed=dbregistred_content)
+          if str(e) == "list index out of range":
+            pass
+          errorcode = discord.Embed(title="Something went wrong...", description="This bug was reported to the bot developer.\n\n```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "\nErrorcode: " + str(e) + "```", color=botconfig['accent1'])
+          await message.channel.send(embed=errorcode)
 bot.run(botconfig['token'])

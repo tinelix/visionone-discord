@@ -12,7 +12,7 @@ botconfig = {
     'accent1': 0xd7832a,
     'accent2': 0xcb3532,
     'accent3': 0x6eda5f,
-    'version': '01R3-210102',
+    'version': '01R4-210104',
     'owner': '741883312108339231',
     'logs_channel': 788723868255649832,
     'unsplash_ak': os.environ['UNSAKEY'],

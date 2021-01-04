@@ -6,7 +6,8 @@ async def messaging_logger(bot, discord, message, one_result, guild_result, conn
 
 async def traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e):
   logging_content = discord.Embed(title=botconfig['name'] + " Logger", description="Found bug.", color=botconfig['accent1'])
-  logging_content.add_field(name="Traceback", value="```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "```", inline=False)
+  logging_content.add_field(name="Traceback", value="```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "\nErrorcode: " + str(e) + "```", inline=False)
+  logging_content.add_field(name="Message", value="```" + str(message.author.name) + "#" + str(message.author.discriminator) + ": " + message.content + "```")
   await bot.get_channel(botconfig['logs_channel']).send(embed=logging_content)
 
 async def joining_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig):

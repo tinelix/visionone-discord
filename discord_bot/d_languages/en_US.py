@@ -1,9 +1,31 @@
+import importlib.util
+spec = importlib.util.spec_from_file_location("botconfig", "/home/runner/visionbot/discord_bot/discord_botconfig.py")
+botconfig = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(botconfig)
 def get():
+    prefix = botconfig.botconfig['prefix'] 
     return [
         'English', # 0
         [ # 1
             [ # 1.0
-                ' - a bot written from scratch in Python. While it is in development, gradually adding its new features. Developed by Tinelix. [Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n\n`=help` `=state` `=profile` `=settings`' # 1.0.0
+                ' - a bot written from scratch in Python. While it is in development, gradually adding its new features. Developed by Tinelix.\n**Prefix:** `{0}` | [Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot) | [GitHub](https://github.com/tinelix/visionbot)'.format(prefix), # 1.0.0
+                [ # 1.0.1
+                  'Inform', # 1.0.1.0
+                  '`help` `state` `profile`' # 1.0.1.1
+                ],
+                [ # 1.0.2
+                  'Fun', # 1.0.2.0
+                  '`=photo`' # 1.0.2.1
+                ],
+                [ # 1.0.3
+                  'Management', # 1.0.3.0
+                  '`=settings`' # 1.0.3.1
+                ],
+                [ # 1.0.4
+                  'Miscellaneous', # 1.0.4.0
+                  '`calc`' # 1.0.4.1
+                ],
+                '**Prefix:** ' # 1.0.5
             ],
             [ # 1.1
                 'Bot health', # 1.1.0
@@ -13,14 +35,15 @@ def get():
                 'CPU', # 1.1.4
                 'Python version', # 1.1.5
                 'Python build date', # 1.1.6
-                'Packages versions' # 1.1.7
+                'Packages versions', # 1.1.7
+                'Analytics' # 1.1.8
             ],
             [ # 1.2
                 'Settings', # 1.2.0
                 'To access the desired setting, click on one of the appropriate reactions.\n\n**🗣️ Bot language**\n**🕓 Timezone**\n**🗨️ Messages count**\n**🌈 Custom embed color**', # 1.2.1
                 [ # 1.2.2
                     'Bot language', # 1.2.2.0
-                    'To change the value, enter the commands below.\n\n**🇷🇺 Russian**\n```=set -l ru-RU```\n\n**🇺🇸 English**\n```=set -l en-US```' # 1.2.2.1
+                    'To change the value, enter the commands below.\n\n**🇷🇺 Russian**\n```{0}set -l ru-RU```\n\n**🇺🇸 English**\n```{0}set -l en-US```'.format(prefix) # 1.2.2.1
                 ],
                 [ # 1.2.3
                     'Timezone', # 1.2.3.0
@@ -28,7 +51,7 @@ def get():
                     'Valid values', # 1.2.3.2
                     '-120 to 140 (UTC)', # 1.2.3.3
                     'Example', # 1.2.3.4
-                    '```=set -tz -80\n=set -tz 30\n=set -tz 55```', # 1.2.3.5
+                    '```{0}set -tz -80\n{0}set -tz 30\n{0}set -tz 55```'.format(prefix), # 1.2.3.5
                     '-80 for UTC-8:00, 30 for UTC+3:00 (MSK), 55 for UTC+5:30.' # 1.2.3.6
                 ],
                 [ # 1.2.4
@@ -51,14 +74,14 @@ def get():
                     'Valid values', # 1.2.6.3
                     '`on` - enable, `off` - disable', # 1.2.6.4
                     'Example', # 1.2.6.5
-                    '```=set -mc on```' # 1.2.6.6
+                    '```{0}set -mc on```'.format(prefix) # 1.2.6.6
                 ],
                 [ # 1.2.7
                     'Custom embed color (🏠)', # 1.2.7.0
                     'Valid values', # 1.2.7.1
                     '`red`, `orange`, `yellow`, `green`, `skyblue`, `blue`, `violet`, `rose`', # 1.2.7.2
                     'Example', # 1.2.7.3
-                    '```=set -ec skyblue```', # 1.2.7.4
+                    '```{0}set -ec skyblue```'.format(prefix), # 1.2.7.4
                     'Custom embed color (🏠)', # 1.2.7.5
                     'Changes saved.' # 1.2.7.6
                 ]
@@ -124,8 +147,8 @@ def get():
             ],
             [ # 1.5
                 'Profile', # 1.5.0
-                '`=profile -u [ID]` - find out information about the user.\n`=profile -g` - find out information about the server', # 1.5.1
-                'Your parameters (can be changed in `=settings`): ', # 1.5.2
+                '`%sprofile -u [ID]` - find out information about the user.\n`{0}profile -g` - find out information about the server'.format(prefix), # 1.5.1
+                'Your parameters (can be changed in `{0}settings`): '.format(prefix), # 1.5.2
                 'message counter enabled', # 1.5.3
                 'UTC', # 1.5.4
                 ' timezone', # 1.5.5
@@ -159,5 +182,12 @@ def get():
                 'Enough for now!', # 1.8.3
                 'It will be possible to see more photos in exactly an hour, since the Unsplash API has a limit of no more than 50 requests per hour. We apologize for any inconvenience caused.' # 1.8.4
             ],
+            [ # 1.9
+                'Calculator', # 1.9.0
+                'Listing', # 1.9.1
+                'Result', # 1.9.2
+                'Exception caught!\n', # 1.9.3
+                'You forgot to enter an expression.\n```{0}calc 4 * 58```'.format(prefix) # 1.9.4
+            ]
         ]
     ]
