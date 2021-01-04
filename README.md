@@ -1,5 +1,6 @@
 <h1>Vision Bot</h1>
 <p>Разработан Тинеликсом в качестве замены бота Highflash. Доступен на данный момент для Discord.<br>
+  (<i>Google Translate, i'm sorry</i>: Developed by Tinelix as a replacement for the Highflash bot. Available for now on Discord)<br>
 <i>Лицензируется с условиями GNU Affero General Public License версии 3 для веб-приложений.</i>
 <p><b>Преимущества перед Highflash</b>
 <p>1. Счетчик сообщений
@@ -23,4 +24,4 @@ UNSRDC=[link: https://unsplash.com/developers]</pre>
 <br>5. И наконец-то запускаете.
 <p>Для работы бота в круглосуточном режиме, рекомендуется использовать хостинг репозиториев Repl.it и пинг-сервис Freshping.
 <p>Присутствуют английский и русский языки. Вопросы к работе бота направляйте через Issues.
-<p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер</a> | <a href="https://vk.com/tinelix">Паблик ВК</a> | <a href="https://repl.it/@tinelix/visionbot">"Ночной" альт-репозиторий</i></a>
+<p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер (Add bot to Discord-server)</a> | <a href="https://vk.com/tinelix">Паблик ВК (VK public group)</a> | <a href="https://repl.it/@tinelix/visionbot">"Ночной" альт-репозиторий (Nightly alt-repository)</i></a>
