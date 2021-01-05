@@ -20,8 +20,9 @@ UNSAKEY=[link: https://unsplash.com/developers]
 UNSSKEY=[link: https://unsplash.com/developers]
 UNSRDC=[link: https://unsplash.com/developers]</pre>
 3. Убедитесь, что у Вас установлены необходимые пакеты. Если что, смотрите файлы - <code>bot_d.py, keep_alive.py и pyproject.toml</code>
-<br>4. Пошаманите хоть как-то...
-<br>5. И наконец-то запускаете.
+<br>4. Авторские команды (в кодах вызовы оставлены) можно либо создавать руками, либо удалять с кода.
+<br>5. Пошаманите хоть как-то...
+<br>6. И наконец-то запускаете.
 <p>Для работы бота в круглосуточном режиме, рекомендуется использовать хостинг репозиториев Repl.it и пинг-сервис Freshping.
 <p>Присутствуют английский и русский языки. Вопросы к работе бота направляйте через Issues.
 <p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер (Add bot to Discord-server)</a> | <a href="https://vk.com/tinelix">Паблик ВК (VK public group)</a> | <a href="https://repl.it/@tinelix/visionbot">"Ночной" альт-репозиторий (Nightly alt-repository)</i></a>
