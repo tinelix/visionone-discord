@@ -22,12 +22,14 @@ from .d_commands.eval import eval_cmd
 from .d_commands.settings import settings_cmd
 from .d_commands.photo import photo_cmd
 from .d_commands.calc import calc_cmd
+from .d_commands.feedback import feedback_cmd
 import discord_bot.d_commands.set as settings
 import discord_bot.d_commands.profile as profile
 import discord_bot.d_events.cooldown as cooldown
 import discord_bot.d_events.logging as logging
 import discord_bot.d_author_cmds.tnews as tnews
 import discord_bot.d_commands.blacklist as blacklist
+import discord_bot.d_events.new_member as autorole
 
 import discord_bot.d_languages.en_US as en_US
 import discord_bot.d_languages.ru_RU as ru_RU
@@ -106,20 +108,35 @@ async def on_guild_join(guild):
     # print(guild)
     connection.commit()
     await logging.joining_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig)
-    
+  
+@bot.event
+async def on_member_join(member):
+  await autorole.autorole(bot, discord, member, botconfig)
+
 @bot.event
 async def on_message(message):
     if message.author == bot.user or str(message.channel.type) == "private" or message.author.bot == True:
         return
     cursor.execute("SELECT * FROM users WHERE userid='" + str(message.author.id) + "';")
-    one_result = cursor.fetchone()
+    one_result = (cursor.fetchone())
     # print("SQLite Database | " + str(one_result))
     cursor.execute("SELECT * FROM guilds WHERE guildid='" + str(message.guild.id) + "';")
-    guild_result = cursor.fetchone()
+    guild_result = (cursor.fetchone())
     # print("SQLite Database | " + str(guild_result))
     cursor.execute("SELECT * FROM users WHERE userid='" + str(message.author.id) + "';")
     cursor.execute("SELECT * FROM bot_data WHERE number='" + str(0) + "';")
-    bot_data_result = cursor.fetchone()
+    bot_data_result = (cursor.fetchone())
+    try:
+      f = open('.recovery', 'w')
+      f.write(str(one_result) + "\n" + str(guild_result) + "\n" + str(bot_data_result))
+      f.close
+    except:
+      f = open('.recovery')
+      text = f.read()
+      f.close()
+      one_result = list(text.split("\n")[0])
+      print(one_result)
+      guild_result = list(text.split("\n")[0])
     try:
         lastmsgtime = one_result[6]
     except:
@@ -184,9 +201,6 @@ async def on_message(message):
         print(e)
         guild = [(message.guild.id, str(message.guild.region), 0, unix_time_millis(message.created_at), "Enabled", "Standart", "=")]
         bot_data = [(0, 0)]
-        exc_type, exc_value, exc_tb = sys.exc_info()
-        ex = traceback.format_exception(exc_type, exc_value, exc_tb)
-        await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
     
     cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
     # print(user)
@@ -258,16 +272,20 @@ async def on_message(message):
                 await photo_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, unsplash, time_diff, bot_data_result, cursor, connection, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'calc'):
                 await calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr)
+            if message.content.startswith(botconfig['prefix'] + 'feedback'):
+                await feedback_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color)
       except Exception as e:
         if message.content.startswith(botconfig['prefix']):
           exc_type, exc_value, exc_tb = sys.exc_info()
           ex = traceback.format_exception(exc_type, exc_value, exc_tb)
           await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
-          if str(e) == "local variable 'localization' referenced before assignment" or str(e) == "'NoneType' object is not subscriptable":
+          if str(e) == "local variable 'localization' referenced before assignment":
             dbregistred_content = discord.Embed(title="База данных пользователя", description="База данных пользователя зарегистрирована, пишите команду еще раз.", color=botconfig['accent1'])
             return await message.channel.send(embed=dbregistred_content)
-          if str(e) == "list index out of range":
+          if str(e) == "list index out of range" or str(e) == "'NoneType' object is not subscriptable":
             pass
           errorcode = discord.Embed(title="Something went wrong...", description="This bug was reported to the bot developer.\n\n```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "\nErrorcode: " + str(e) + "```", color=botconfig['accent1'])
           await message.channel.send(embed=errorcode)
+        else:
+          pass
 bot.run(botconfig['token'])

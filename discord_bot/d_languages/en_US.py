@@ -3,6 +3,7 @@ spec = importlib.util.spec_from_file_location("botconfig", "/home/runner/visionb
 botconfig = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(botconfig)
 def get():
+    name = botconfig.botconfig['name'] 
     prefix = botconfig.botconfig['prefix'] 
     return [
         'English', # 0
@@ -11,7 +12,7 @@ def get():
                 ' - a bot written from scratch in Python. While it is in development, gradually adding its new features. Developed by Tinelix.\n**Prefix:** `{0}` | [Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot) | [GitHub](https://github.com/tinelix/visionbot)'.format(prefix), # 1.0.0
                 [ # 1.0.1
                   'Inform', # 1.0.1.0
-                  '`help` `state` `profile`' # 1.0.1.1
+                  '`help` `state` `profile` `feedback`' # 1.0.1.1
                 ],
                 [ # 1.0.2
                   'Fun', # 1.0.2.0
@@ -160,20 +161,17 @@ def get():
                 'To select an title, press one of the corresponding reactions. (for Russian auditory only)\n\n' # 1.6.1
             ],
             [ # 1.7
-                'New Year\'s countdown', # 1.7.0
-                ' days, ', # 1.7.1
-                ' hours, ', # 1.7.2
-                ' minutes ', # 1.7.3
-                ' seconds', # 1.7.4
-                ' (Moscow, UTC+3:00)', # 1.7.5
-                ' (Chelyabinsk/Ekaterinburg, UTC+5:00)', # 1.7.6
-                ' (Novosibirsk/Barnaul, UTC+7:00)', # 1.7.7
-                ' (Ulan-Ude, UTC+8:00)', # 1.7.8
-                'Countdown in other cities', # 1.7.9
-                '_**New Year already arrived in Moscow!**_', # 1.7.11
-                '_**New Year already arrived in Chelyabinsk and Ekaterinburg!**_', # 1.7.12
-                '_**New Year already arrived in Novosibirsk and Barnual!**_', # 1.7.13
-                '_**New Year already arrived in Ulan-Ude!**_' # 1.7.14      
+                ' ', # 1.7.0
+                ' ', # 1.7.1
+                ' ', # 1.7.2
+                ' ', # 1.7.3
+                ' ', # 1.7.4
+                ' ', # 1.7.5
+                ' ', # 1.7.6
+                ' ', # 1.7.7
+                ' ', # 1.7.11
+                ' ', # 1.7.13
+                ' ' # 1.7.14      
             ],
             [ # 1.8
                 'Random photos', # 1.8.0
@@ -188,6 +186,13 @@ def get():
                 'Result', # 1.9.2
                 'Exception caught!\n', # 1.9.3
                 'You forgot to enter an expression.\n```{0}calc 4 * 58```'.format(prefix) # 1.9.4
+            ],
+            [ # 1.10
+                'Feedback', # 1.10.0
+                '{0} Bugtracker'.format(name), # 1.10.1
+                'The author bot will reply shortly, please wait...', # 1.10.2
+                'You forgot to provide arguments.\n\n```{0}feedback Hi!```'.format(prefix), # 1.10.3
+                'You answered:' # 1.10.4
             ]
         ]
     ]
