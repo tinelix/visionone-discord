@@ -11,7 +11,7 @@ def get():
             [ # 1.0
                 ' - a bot written from scratch in Python. While it is in development, gradually adding its new features. Developed by Tinelix.\n**Prefix:** `{0}` | [Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot) | [GitHub](https://github.com/tinelix/visionbot)'.format(prefix), # 1.0.0
                 [ # 1.0.1
-                  'Inform', # 1.0.1.0
+                  'General', # 1.0.1.0
                   '`help` `state` `profile` `feedback`' # 1.0.1.1
                 ],
                 [ # 1.0.2
@@ -24,7 +24,7 @@ def get():
                 ],
                 [ # 1.0.4
                   'Miscellaneous', # 1.0.4.0
-                  '`calc`' # 1.0.4.1
+                  '`calc` `weather`' # 1.0.4.1
                 ],
                 '**Prefix:** ' # 1.0.5
             ],
@@ -37,7 +37,8 @@ def get():
                 'Python version', # 1.1.5
                 'Python build date', # 1.1.6
                 'Packages versions', # 1.1.7
-                'Analytics' # 1.1.8
+                'Analytics', # 1.1.8
+                'Bot author' # 1.1.9
             ],
             [ # 1.2
                 'Settings', # 1.2.0
@@ -178,14 +179,18 @@ def get():
                 'Author', # 1.8.1
                 'Likes', # 1.8.2
                 'Enough for now!', # 1.8.3
-                'It will be possible to see more photos in exactly an hour, since the Unsplash API has a limit of no more than 50 requests per hour. We apologize for any inconvenience caused.' # 1.8.4
+                'It will be possible to see more photos in exactly an hour, since the Unsplash API has a limit of no more than 50 requests per hour. We apologize for any inconvenience caused.', # 1.8.4
+                '`{0}photo -u` - viewing photos from Unsplash.\n`{0}photo -r` - viewing photos from subreddits.'.format(prefix)
             ],
             [ # 1.9
                 'Calculator', # 1.9.0
                 'Listing', # 1.9.1
                 'Result', # 1.9.2
                 'Exception caught!\n', # 1.9.3
-                'You forgot to enter an expression.\n```{0}calc 4 * 58```'.format(prefix) # 1.9.4
+                'You forgot to enter an expression.\n```{0}calc 4 * 58```'.format(prefix), # 1.9.4
+                'In this version of the Calculator you can only perform simple arithmetic operations.', # 1.9.5
+                'Available characters', # 1.9.7
+                '`+` - add\n`-` - subtract\n`*` - multiply\n`/` - divide'
             ],
             [ # 1.10
                 'Feedback', # 1.10.0
@@ -193,6 +198,38 @@ def get():
                 'The author bot will reply shortly, please wait...', # 1.10.2
                 'You forgot to provide arguments.\n\n```{0}feedback Hi!```'.format(prefix), # 1.10.3
                 'You answered:' # 1.10.4
-            ]
+            ],
+            [ # 1.11
+                'Weather | ', # 1.11.0
+                'Temperature', # 1.11.1
+                'min. ', # 1.11.2
+                ', avg. ', # 1.11.3
+                ', max. ', # 1.11.4
+                'Wind speed', # 1.11.5
+                ' MPS', # 1.11.6
+                'Humidity', # 1.11.7
+                'Forecast for the next 12 hours', # 1.11.8
+                'Used by the OpenWeatherMap API', # 1.11.9
+                'en', # 1.11.10
+                'Error', # 1.11.11
+                'The requested city or town cannot be found. Maybe, write differently?', # 1.11.12
+                'Errorcode', # 1.11.13
+                'You forgot to enter the name of the city.' # 1.11.14
+            ],
+            [ # 1.12
+                'Crystal Ball', # 1.12.0
+                'Question', # 1.12.1
+                'He says', # 1.12.2
+                'All matches are random.', # 1.12.3
+                'Error', # 1.12.4
+                'First ask him a question.' # 1.12.5
+            ],
+            [ # 1.13
+                'Error', # 1.13.0
+                'You must make sure that community features are enabled on your Discord server in order to post news.', # 1.13.1
+                'You forgot to enter a message to publication.', # 1.13.2
+                'This command unavailable, because you don\'t have permisson to manage messages.', # 1.13.3
+                'Switch to the news channel first.'
+            ],
         ]
     ]

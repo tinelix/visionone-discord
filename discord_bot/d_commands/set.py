@@ -75,10 +75,10 @@ async def switch_msgcounter(bot, discord, message, botconfig, os, platform, date
             if reaction.emoji == "🏠" and user.id != bot.user.id:
                 if message.author.guild_permissions.manage_guild == True:
                     try:
-                        guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], 'Disabled', one_result[5], one_result[6])]
+                        guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], 'Disabled', one_result[5], one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
                     except:
-                        guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', 'Standart', '=')]
-                    cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?);", guild)
+                        guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', 'Standart', '=', 'English', 0, '', 0, '')]
+                    cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
                     connection.commit()
                     await msg.edit(embed=msgcounter_content)
                 else:
@@ -104,10 +104,10 @@ async def switch_msgcounter(bot, discord, message, botconfig, os, platform, date
             if reaction.emoji == "🏠" and user.id != bot.user.id:
                 if message.author.guild_permissions.manage_guild == True:
                     try:
-                        guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], 'Disabled', one_result[5], one_result[6])]
+                        guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], 'Disabled', one_result[5], one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
                     except:
-                        guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Disabled', "Standart", "=")]
-                    cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?);", guild)
+                        guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Disabled', "Standart", "=", 'English', 0, '', 0, '')]
+                    cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
                     connection.commit()
                     await msg.edit(embed=msgcounter_content)
                 else:
@@ -131,46 +131,46 @@ async def set_embed_color(bot, discord, message, botconfig, os, platform, dateti
       if subargs == "red":
         try:
           print('test')
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Red", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Red", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Red", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Red", "=", 'English', 0, '', 0, '')]
       if subargs == "orange":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Standart", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Standart", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Standart", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Standart", "=", 'English', 0, '', 0, '')]
       if subargs == "yellow":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Yellow", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Yellow", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Yellow", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Yellow", "=", 'English', 0, '', 0, '')]
       if subargs == "green":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Green", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Green", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Green", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Green", "=", 'English', 0, '', 0, '')]
       if subargs == "skyblue":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Sky-blue", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Sky-blue", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Sky-blue", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Sky-blue", "=", 'English', 0, '', 0, '')]
       if subargs == "blue":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Blue", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Blue", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Blue", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Blue", "=", 'English', 0, '', 0, '')]
       if subargs == "violet":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Violet", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Violet", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Violet", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Violet", "=", 'English', 0, '', 0, '')]
       if subargs == "rose":
         try:
-          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Rose", one_result[6])]
+          guild = [(message.guild.id, one_result[1], one_result[2], one_result[3], one_result[4], "Rose", one_result[6], one_result[7], one_result[8], one_result[9], one_result[10], one_result[11])]
         except:
-          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Rose", "=")]
+          guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', "Rose", "=", 'English', 0, '', 0, '')]
       try:    
-        cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?);", guild)
+        cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
         connection.commit()
         customecolor_content = discord.Embed(title=str(localization[1][2][7][0]), description=str(localization[1][2][7][6]), color=embed_color)
         await message.channel.send(embed=customecolor_content)

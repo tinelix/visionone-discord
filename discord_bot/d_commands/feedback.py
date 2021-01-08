@@ -8,6 +8,15 @@ async def feedback_cmd(bot, discord, message, botconfig, os, platform, datetime,
     new_message_content = discord.Embed(title='Feedback', description=message.author.name + "#" + str(message.author.discriminator) + ": \"" + " ".join(args[1:]) + "\"", color=embed_color)
     new_message_content.add_field(name="Channel ID", value=str(message.channel.id), inline=True)
     new_message_content.add_field(name="User ID", value=str(message.author.id), inline=True)
+    if message.attachments is not None:
+      attachments_str = "\n"
+      try:
+        for attachment in message.attachments:
+          attachments_str += str("[Attachment " + str(message.attachments.index(attachment) + 1) + "](" + attachment.url + ")\n")
+        if message.attachments != []:
+          new_message_content.add_field(name="Attachments", value=attachments_str, inline=True)
+      except:
+        pass
     await bot.get_user(int(botconfig['owner'])).send(embed=new_message_content)
     await message.channel.send(embed=feedback_content)
   else:
