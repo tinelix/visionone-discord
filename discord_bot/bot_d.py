@@ -8,13 +8,16 @@ import time
 import sys
 import traceback
 import json
+import numexpr
+import gc
+import keep_alive
+keep_alive.keep_alive()
 
+from requests.auth import HTTPBasicAuth
 from threading import Timer
 from sqlite3 import Error
 from discord.ext import commands
 from .discord_botconfig import botconfig
-import keep_alive
-import numexpr
 
 from unsplash.api import Api as unsplash_api
 from unsplash.auth import Auth
@@ -29,6 +32,10 @@ from .d_commands.feedback import feedback_cmd
 from .d_commands.weather import weather_cmd
 from .d_commands.crystball import crystball_cmd
 from .d_commands.post import post_cmd
+from .d_commands.guilds import guilds_cmd
+from .d_commands.info import info_cmd
+from .d_commands.poll import poll_cmd
+from .d_commands.reputation import rep_cmd
 import discord_bot.d_commands.set as settings
 import discord_bot.d_commands.profile as profile
 import discord_bot.d_events.cooldown as cooldown
@@ -36,6 +43,8 @@ import discord_bot.d_events.logging as logging
 import discord_bot.d_author_cmds.tnews as tnews
 import discord_bot.d_commands.blacklist as blacklist
 import discord_bot.d_events.new_member as autorole
+import discord_bot.d_commands.codec as codec
+import discord_bot.mem
 import praw
 
 reddit = praw.Reddit(client_id=os.environ['REDDITID'],
@@ -43,6 +52,7 @@ reddit = praw.Reddit(client_id=os.environ['REDDITID'],
                      user_agent='Vision Bot',
                      username='dmitcomputers')
 
+import discord_bot.d_languages.binary as binary
 import discord_bot.d_languages.en_US as en_US
 import discord_bot.d_languages.ru_RU as ru_RU
 
@@ -83,7 +93,10 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS users(
         timezone INT NOT NULL,
         dbregdate INT NOT NULL,
         messagecount TEXT NOT NULL,
-        lastmsgtime INT NOT NULL);
+        lastmsgtime INT NOT NULL,
+        reputation INT NOT NULL,
+        scores INT NOT NULL,
+        level INT NOT NULL);
     """)
 cursor.execute("""CREATE TABLE IF NOT EXISTS guilds(
         guildid TEXT NOT NULL PRIMARY KEY,
@@ -106,36 +119,60 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS bot_data(
         number INT NOT NULL PRIMARY KEY,
         unsplash_count INT NOT NULL);
     """)
+cursor.execute("""CREATE TABLE IF NOT EXISTS polls(
+        msgid INT NOT NULL PRIMARY KEY,
+        userid INT NOT NULL,
+        enddate INT NOT NULL);
+    """)
+cursor.execute("""CREATE TABLE IF NOT EXISTS reputations(
+        msgid INT NOT NULL PRIMARY KEY,
+        userid INT NOT NULL,
+        repid INT NOT NULL,
+        fan TEXT NOT NULL,
+        hater TEXT NOT NULL);
+    """)
 connection.commit()
+
 
 @bot.event
 async def on_ready():
-    keep_alive.keep_alive()
     print('\nWelcome! Vision ver. ' + botconfig['version'] + '\n(©) 2020-2021 Tinelix. All rights reserved.')
     print('\nConnected - ' + bot.user.name + '#' + bot.user.discriminator + '\nLatency: ' + str(round(bot.latency * 1000, 2)) + ' ms | Guilds: ' + str(len(bot.guilds)))
     print('----------------------------------------------------------------------')
+    boticord_token = os.environ['BOTICORDTOKEN']
+    bots_ds_token = os.environ['BOTSDST']
     game = discord.Game(str(len(bot.guilds)) + " guilds | =help", type=discord.ActivityType.watching)
     await bot.change_presence(status=discord.Status.dnd, activity=game)
-    res = requests.post("https://api.server-discord.com/v2/bots/785383439196487720/stats", params={'id': 785383439196487720}, headers={'Authorization': os.environ['BOTSDST']}, data={'shards': 0, 'servers': len(bot.guilds)})
-    print(res)
+    res = requests.post("https://api.server-discord.com/v2/bots/785383439196487720/stats", headers={'Content-Type':'application/json',
+               'Authorization': 'SDC {0}'.format(bots_ds_token)}, json={'shards': 0, 'servers': len(bot.guilds)}) 
+    print(res.content.decode('utf-8'))
+    res2 = requests.post("https://boticord.top/api/stats", headers={'Content-Type':'application/json',
+               'Authorization': '{}'.format(boticord_token)}, json={'shards': 0, 'servers': len(bot.guilds), 'users': len(bot.users)})
+    print(res2.content.decode('utf-8'))
 
 @bot.event
 async def on_guild_join(guild):
-    requests.post("https://api.server-discord.com/v2/bots/785383439196487720/stats", params={'id': 785383439196487720}, headers={'Authorization': os.environ['BOTSDST']}, data={'shards': 0, 'servers': len(bot.guilds)})
+    boticord_token = os.environ['BOTICORDTOKEN']
+    bots_ds_token = os.environ['BOTSDST']
+    res = requests.post("https://api.server-discord.com/v2/bots/785383439196487720/stats", headers={'Content-Type':'application/json',
+               'Authorization': 'SDC {0}'.format(bots_ds_token)}, json={'shards': 0, 'servers': len(bot.guilds)}) 
+    print(res.content.decode('utf-8'))
+    res2 = requests.post("https://boticord.top/api/stats", headers={'Content-Type':'application/json',
+               'Authorization': '{}'.format(boticord_token)}, json={'shards': 0, 'servers': len(bot.guilds), 'users': len(bot.users)})
     game = discord.Game(str(len(bot.guilds)) + " guilds | =help", type=discord.ActivityType.watching)
     await bot.change_presence(status=discord.Status.dnd, activity=game)
-    try:
-      cursor.execute("SELECT * FROM blacklist_guilds WHERE guildid='" + str(guild.id) + "';")
-      blacklist_guild_result = cursor.fetchone()
-      print("SQLite Database | " + str(blacklist_guild_result))
-      await bot.get_guild(int(blacklist_guild_result[0])).leave()
-    except Exception as e:
-      print(e)
     guild_s = [(guild.id, str(guild.region), 0, unix_time_millis(datetime.datetime.now()), "Enabled", 'Standart', '=', 'English', 0, '', 0, '')]
     cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild_s)
     # print(guild)
     connection.commit()
     await logging.joining_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig)
+
+@bot.event
+async def on_guild_remove(guild):
+    requests.post("https://api.server-discord.com/v2/bots/785383439196487720/stats", params={'id': 785383439196487720}, headers={'Authorization': os.environ['BOTSDST']}, data={'shards': 0, 'servers': len(bot.guilds)})
+    game = discord.Game(str(len(bot.guilds)) + " guilds | =help", type=discord.ActivityType.watching)
+    await bot.change_presence(status=discord.Status.dnd, activity=game)
+    await logging.leaving_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig)
   
 @bot.event
 async def on_member_join(member):
@@ -170,7 +207,7 @@ async def on_message(message):
         elif one_result[1] == "English":
             localization = en_US.get()
         if one_result[5] == "Enabled":
-            user = [(message.author.id, one_result[1], one_result[2] + 1, one_result[3], one_result[4], "Enabled", unix_time_millis(message.created_at))]
+            user = [(message.author.id, one_result[1], one_result[2] + 1, one_result[3], one_result[4], "Enabled", unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
             userdata_recovery = {
                 "userid": message.author.id,
                 "botlanguage": one_result[1],
@@ -178,10 +215,11 @@ async def on_message(message):
                 "timezone": one_result[3],
                 "dbregdate": one_result[4],
                 "messagecount": "Enabled",
-                "lastmsgtime": unix_time_millis(message.created_at)
+                "lastmsgtime": unix_time_millis(message.created_at),
+                "reputation": one_result[7]
             }
         elif one_result[5] == "Disabled": 
-            user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], "Disabled", unix_time_millis(message.created_at))]
+            user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], "Disabled", unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
             userdata_recovery = {
                 "userid": message.author.id,
                 "botlanguage": one_result[1],
@@ -189,7 +227,8 @@ async def on_message(message):
                 "timezone": one_result[3],
                 "dbregdate": one_result[4],
                 "messagecount": "Disabled",
-                "lastmsgtime": unix_time_millis(message.created_at)
+                "lastmsgtime": unix_time_millis(message.created_at),
+                "reputation": one_result[7]
             }
         else:
             user = [(message.author.id, one_result[1], one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at))]
@@ -200,7 +239,8 @@ async def on_message(message):
                 "timezone": one_result[3],
                 "dbregdate": one_result[4],
                 "messagecount": one_result[5],
-                "lastmsgtime": unix_time_millis(message.created_at)
+                "lastmsgtime": unix_time_millis(message.created_at),
+                "reputation": one_result[7]
             }
         if guild_result[4] == "Enabled":
             guild = [(message.guild.id, guild_result[1], guild_result[2] + 1, guild_result[3], "Enabled", guild_result[5], guild_result[6], guild_result[7], guild_result[8], guild_result[9], guild_result[10], guild_result[11])]
@@ -219,7 +259,7 @@ async def on_message(message):
                 "goodbyetext": guild_result[11],
             },
         elif guild_result[4] == "Disabled": 
-            guild = [(message.guild.id, guild_result[1], guild_result[2] + 1, guild_result[3], "Disabled", guild_result[5], guild_result[6], guild_result[7], guild_result[8], guild_result[9], guild_result[10], guild_result[11])]
+            guild = [(message.guild.id, guild_result[1], guild_result[2], guild_result[3], "Disabled", guild_result[5], guild_result[6], guild_result[7], guild_result[8], guild_result[9], guild_result[10], guild_result[11])]
             guilddata_recovery = {
                 "guildid": message.guild.id,
                 "region": guild_result[1],
@@ -276,15 +316,15 @@ async def on_message(message):
           print("Registration...")
           pass
         if str(message.guild.region) == "russia":
-            user = [(message.author.id, "Russian", 0, 10800000, unix_time_millis(message.created_at), "Disabled", unix_time_millis(message.created_at))]
+            user = [(message.author.id, "Russian", 0, 10800000, unix_time_millis(message.created_at), "Disabled", unix_time_millis(message.created_at), 0, 0, 0)]
             guild = [(message.guild.id, str(message.guild.region), 0, unix_time_millis(message.created_at), "Disabled", "Standart", "=", "Russian", 0, "", 0, "")]
         else:
-            user = [(message.author.id, "English", 0, 10800000, unix_time_millis(message.created_at), "Disabled", unix_time_millis(message.created_at))]
+            user = [(message.author.id, "English", 0, 10800000, unix_time_millis(message.created_at), "Disabled", unix_time_millis(message.created_at), 0, 0, 0)]
             guild = [(message.guild.id, str(message.guild.region), 0, unix_time_millis(message.created_at), "Disabled", "Standart", "=", "English", 0, "", 0, "")]
         print(e)
         bot_data = [(0, 0)]
 
-    cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+    cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
     # print(user)
     connection.commit()
     cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
@@ -310,6 +350,8 @@ async def on_message(message):
                 await state_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color, connection, cursor)
             if message.content.startswith(botconfig['prefix'] + 'eval'):
                 await eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, en_US, guild_result, intents, embed_color)
+            if message.content.startswith(botconfig['prefix'] + 'guilds'):
+                await guilds_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, guild_result, intents, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'db'):
                 await db_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, connection, cursor)
             if message.content.startswith(botconfig['prefix'] + 'clock'):
@@ -368,22 +410,38 @@ async def on_message(message):
               await crystball_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color, requests)
             if message.content.startswith(botconfig['prefix'] + 'post'):
                 await post_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color)
+            if message.content.startswith(botconfig['prefix'] + 'info'):
+                await info_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'codec'):
-                args = message.content.split();
+              args = message.content.split();
+              try:
                 if args[1] == "-d": 
-                  return  
+                  await codec.decoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary)
+                if args[1] == "-e":
+                  await codec.encoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary)
+              except Exception as e:
+                await codec.get_help(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color)
+                print(e)
+            if message.content.startswith(botconfig['prefix'] + 'poll'):
+                await poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color, connection, cursor)
+            if message.content.startswith(botconfig['prefix'] + 'rep'):
+                await rep_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, embed_color, connection, cursor)
       except Exception as e:
         if message.content.startswith(botconfig['prefix']):
           exc_type, exc_value, exc_tb = sys.exc_info()
           ex = traceback.format_exception(exc_type, exc_value, exc_tb)
           await logging.traceback_logger(bot, discord, message, one_result, guild_result, connection, cursor, unix_time_millis, botconfig, bot_data_result, ex, e)
           if str(e) == "local variable 'localization' referenced before assignment":
-            dbregistred_content = discord.Embed(title="База данных пользователя", description="База данных пользователя зарегистрирована, пишите команду еще раз.", color=botconfig['accent1'])
+            if str(message.guild.region) == "russia":
+              dbregistred_content = discord.Embed(title="База данных пользователя", description="База данных пользователя зарегистрирована. Напишите команду еще раз.", color=botconfig['accent1'])
+            else:
+              dbregistred_content = discord.Embed(title="User Database", description="Database registered. Type the command again", color=botconfig['accent1'])
             return await message.channel.send(embed=dbregistred_content)
           if str(e) == "list index out of range" or str(e) == "'NoneType' object is not subscriptable":
             pass
           errorcode = discord.Embed(title="Something went wrong...", description="This bug was reported to the bot developer.\n\n```" + ex[0] + "\n" + ex[1] + "\n" + ex[2] + "\nErrorcode: " + str(e) + "```", color=botconfig['accent1'])
           await message.channel.send(embed=errorcode)
+          gc.collect()
         else:
           pass
 

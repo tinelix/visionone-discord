@@ -6,13 +6,13 @@ if os.path.exists(dotenv_path):
 
 botconfig = {
     'token': os.environ['DTOKEN'],
-    'name': 'Vision',
+    'name': 'VisionOne',
     'id': 785383439196487720,
     'prefix': '=',
     'accent1': 0xd7832a,
     'accent2': 0xcb3532,
     'accent3': 0x6eda5f,
-    'version': '01R5-210108',
+    'version': '01R7-210113',
     'owner': '741883312108339231',
     'logs_channel': 788723868255649832,
     'unsplash_ak': os.environ['UNSAKEY'],

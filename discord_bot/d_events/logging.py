@@ -13,15 +13,15 @@ async def traceback_logger(bot, discord, message, one_result, guild_result, conn
 async def joining_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig):
   logging_content = discord.Embed(title=botconfig['name'] + " Logger", description="Bot joined the **" + str(guild.name) + "** server! We have " + str(len(bot.guilds)) + " guilds.", color=botconfig['accent1'])
   logging_content.add_field(name="IDs", value="```S: " + str(guild.id) + "\nO: " + str(guild.owner_id) + "```", inline=False)
-  logging_content.add_field(name="Statistics", value="```Owner: " + str(guild.owner.name) + "#" + str(guild.owner.discriminator) + "\nMembers: " + str(guild.member_count) + "\nBoosts: " + str(guild.premium_subscription_count) + "\nChannels: T - " + str(len(guild.text_channels)) + ", V - " + str(len(guild.voice_channels)) + "\nRegion: " + str(guild.region) + "```", inline=False)
+  logging_content.add_field(name="Statistics", value="```Owner: " + str(guild.owner.name) + "#" + str(guild.owner.discriminator) + "\nMembers: " + str(guild.member_count) + "\nBoosts: " + str(guild.premium_subscription_count) + "\nChannels: Text - " + str(len(guild.text_channels)) + " | Voice - " + str(len(guild.voice_channels)) + "\nRegion: " + str(guild.region) + "```", inline=False)
   logging_content.set_thumbnail(url=str(guild.icon_url_as(format=None, static_format="jpeg", size=4096)))
   await bot.get_channel(botconfig['logs_channel']).send(embed=logging_content)
 
 
-async def joining_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig):
-  logging_content = discord.Embed(title=botconfig['name'] + " Logger", description="Bot joined the **" + str(guild.name) + "** server! We have " + str(len(bot.guilds)) + " guilds.", color=botconfig['accent1'])
+async def leaving_logger(bot, discord, guild, connection, cursor, unix_time_millis, botconfig):
+  logging_content = discord.Embed(title=botconfig['name'] + " Logger", description="Bot left the **" + str(guild.name) + "** server. We have " + str(len(bot.guilds)) + " guilds.", color=botconfig['accent1'])
   logging_content.add_field(name="IDs", value="```S: " + str(guild.id) + "\nO: " + str(guild.owner_id) + "```", inline=False)
-  logging_content.add_field(name="Statistics", value="```Owner: " + str(guild.owner.name) + "#" + str(guild.owner.discriminator) + "\nMembers: " + str(guild.member_count) + "\nBoosts: " + str(guild.premium_subscription_count) + "\nChannels: T - " + str(len(guild.text_channels)) + ", V - " + str(len(guild.voice_channels)) + "\nRegion: " + str(guild.region) + "```", inline=False)
+  logging_content.add_field(name="Statistics", value="```Owner: " + str(guild.owner.name) + "#" + str(guild.owner.discriminator) + "\nMembers: " + str(guild.member_count) + "\nBoosts: " + str(guild.premium_subscription_count) + "\nChannels: Text - " + str(len(guild.text_channels)) + " | Voice - " + str(len(guild.voice_channels)) + "\nRegion: " + str(guild.region) + "```", inline=False)
   logging_content.set_thumbnail(url=str(guild.icon_url_as(format=None, static_format="jpeg", size=4096)))
   await bot.get_channel(botconfig['logs_channel']).send(embed=logging_content)
 

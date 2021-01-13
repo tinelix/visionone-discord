@@ -10,5 +10,8 @@ async def eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one
         except Exception as e:
             result = "Обнаружено исключение!\n" + str(e)
         finally:
+          try:
             eval_content.add_field(name="Результат", value="```" + result + "```", inline=False)
-            await message.channel.send(embed=eval_content)  
+            await message.channel.send(embed=eval_content) 
+          except:
+            await message.channel.send("```" + result + "```")

@@ -1,5 +1,5 @@
 async def post_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color):
-  args = message.content.split();
+  args = message.content.split(" ");
   guild_community = ""
   for guild_features in message.guild.features:
       if guild_features == "COMMUNITY":

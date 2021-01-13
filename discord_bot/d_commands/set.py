@@ -4,20 +4,20 @@ async def set_bot_language(bot, discord, message, botconfig, os, platform, datet
     subargs = args[2]
     if subargs == "en-US":
         try:
-            user = [(message.author.id, 'English', one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at))]
+            user = [(message.author.id, 'English', one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
         except:
-            user = [(message.author.id, 'English', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at))]
-        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+            user = [(message.author.id, 'English', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0 ,0)]
+        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
         connection.commit()
         current_language = "English"
         botlanguage_content = discord.Embed(title="Bot language", description="Your language choosed to " + current_language, color=botconfig['accent1'])
         await message.channel.send(embed=botlanguage_content)
     if subargs == "ru-RU":
         try:
-            user = [(message.author.id, 'Russian', one_result[2] + 1, one_result[3], one_result[4], "Enabled", unix_time_millis(message.created_at))]
+            user = [(message.author.id, 'Russian', one_result[2] + 1, one_result[3], one_result[4], "Enabled", unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
         except:
-            user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at))]
-        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+            user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at), 0, 0, 0)]
+        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
         connection.commit()     
         current_language = "Russian"
         botlanguage_content = discord.Embed(title="Язык бота", description="Ваш язык выбран на " + current_language, color=botconfig['accent1'])
@@ -41,10 +41,10 @@ async def set_timezone(bot, discord, message, botconfig, os, platform, datetime,
         if subargs2.isdigit() == True:
             if -int(subargs) >= -120 and -int(subargs) <= 140:
                 try:
-                    user = [(message.author.id, one_result[1], one_result[2] + 1, int((-int(subargs2) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at))]
+                    user = [(message.author.id, one_result[1], one_result[2] + 1, int((-int(subargs2) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
                 except:
-                    user = [(message.author.id, "Russian", 0, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at))]
-            cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+                    user = [(message.author.id, "Russian", 0, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at), 0, 0, 0)]
+            cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
             connection.commit()
             timezone_content = discord.Embed(title=str(localization[1][2][3][0]), description=localization[1][2][4][2] + your_timezone, color=botconfig['accent1'])
             await message.channel.send(embed=timezone_content)
@@ -52,10 +52,10 @@ async def set_timezone(bot, discord, message, botconfig, os, platform, datetime,
             return await message.channel.send(embed=stringnotisdigit_content)
     if int(subargs) >= -120 and int(subargs) <= 140:
         try:
-            user = [(message.author.id, one_result[1], one_result[2] + 1, int((int(subargs) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at))]
+            user = [(message.author.id, one_result[1], one_result[2] + 1, int((int(subargs) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
         except:
-            user = [(message.author.id, 'Russian', 1, int((subargs / 10) * 60 * 60 * 1000), unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at))]
-        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+            user = [(message.author.id, 'Russian', 1, int((subargs / 10) * 60 * 60 * 1000), unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0, 0)]
+        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
         connection.commit()
         timezone_content = discord.Embed(title=str(localization[1][2][3][0]), description=localization[1][2][4][2] + your_timezone, color=botconfig['accent1'])
         await message.channel.send(embed=timezone_content)
@@ -85,10 +85,10 @@ async def switch_msgcounter(bot, discord, message, botconfig, os, platform, date
                     await msg.edit(embed=nopermerr_content)
             if reaction.emoji == "👤" and user.id != bot.user.id:
                 try:
-                    user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], 'Enabled', unix_time_millis(message.created_at))]
+                    user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], 'Enabled', unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
                 except:
-                    user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at))]
-                cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+                    user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0, 0)]
+                cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
                 connection.commit()
                 await msg.edit(embed=msgcounter_content)
     if subargs == "off":
@@ -114,10 +114,10 @@ async def switch_msgcounter(bot, discord, message, botconfig, os, platform, date
                     await msg.edit(embed=nopermerr_content)
             if reaction.emoji == "👤" and user.id != bot.user.id:
                 try:
-                    user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], 'Disabled', unix_time_millis(message.created_at))]
+                    user = [(message.author.id, one_result[1], one_result[2], one_result[3], one_result[4], 'Disabled', unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
                 except:
-                    user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), 'Disabled', unix_time_millis(message.created_at))]
-                cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);", user)
+                    user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), 'Disabled', unix_time_millis(message.created_at), 0, 0, 0)]
+                cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
                 connection.commit()
                 await msg.edit(embed=msgcounter_content)
     if subargs != "off" and subargs != "on":

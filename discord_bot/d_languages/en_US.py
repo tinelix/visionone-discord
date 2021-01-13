@@ -9,10 +9,10 @@ def get():
         'English', # 0
         [ # 1
             [ # 1.0
-                ' - a bot written from scratch in Python. While it is in development, gradually adding its new features. Developed by Tinelix.\n**Prefix:** `{0}` | [Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot) | [GitHub](https://github.com/tinelix/visionbot)'.format(prefix), # 1.0.0
+                ' - simple and slightly extensible. Developed by Tinelix.\n**Prefix:** `{0}`\n\n**Did you know that...** {1}', # 1.0.0
                 [ # 1.0.1
                   'General', # 1.0.1.0
-                  '`help` `state` `profile` `feedback`' # 1.0.1.1
+                  '`help` `state` `profile` `feedback` `info`' # 1.0.1.1
                 ],
                 [ # 1.0.2
                   'Fun', # 1.0.2.0
@@ -24,7 +24,7 @@ def get():
                 ],
                 [ # 1.0.4
                   'Miscellaneous', # 1.0.4.0
-                  '`calc` `weather`' # 1.0.4.1
+                  '`calc` `weather` `codec` `poll`' # 1.0.4.1
                 ],
                 '**Prefix:** ' # 1.0.5
             ],
@@ -38,7 +38,8 @@ def get():
                 'Python build date', # 1.1.6
                 'Packages versions', # 1.1.7
                 'Analytics', # 1.1.8
-                'Bot author' # 1.1.9
+                'Bot author', # 1.1.9
+                'Links' # 1.1.10
             ],
             [ # 1.2
                 'Settings', # 1.2.0
@@ -107,7 +108,8 @@ def get():
                     '<:offline_emoji:786943380085145651> Offline'
                 ],
                 'Roles ', # 1.3.12
-                'Date of sending the post message' # 1.3.13
+                'Date of sending the post message', # 1.3.13
+                'Reputation' # 1.3.14
             ],
             [ # 1.4
                 'About ', # 1.4.0 
@@ -149,7 +151,7 @@ def get():
             ],
             [ # 1.5
                 'Profile', # 1.5.0
-                '`%sprofile -u [ID]` - find out information about the user.\n`{0}profile -g` - find out information about the server'.format(prefix), # 1.5.1
+                '`{0}profile -u [ID]` - find out information about the user.\n`{0}profile -g` - find out information about the server'.format(prefix), # 1.5.1
                 'Your parameters (can be changed in `{0}settings`): '.format(prefix), # 1.5.2
                 'message counter enabled', # 1.5.3
                 'UTC', # 1.5.4
@@ -231,5 +233,50 @@ def get():
                 'This command unavailable, because you don\'t have permisson to manage messages.', # 1.13.3
                 'Switch to the news channel first.'
             ],
+            [ # 1.14
+              'Codec', # 1.14.0 
+              'You have to choose the data type to decode into a regular string. The selection is made by clicking on the appropriate reaction.', # 1.14.1
+              'You have to choose the data type to encode into a regular string. The selection is made by clicking on the appropriate reaction.', # 1.14.2
+              '1️⃣ Base64\n2️⃣ Base32\n3️⃣ Base16\n4️⃣ Binary code', # 1.14.3
+              'Result', # 1.14.4
+              '`{0}codec -d` - decode text\n`{0}codec -e` - encode text'.format(prefix), # 1.14.5
+              'The text could not be decoded. Invalid data type selected.', # 1.14.6
+              'Viewing in embed message is not possible.' # 1.14.7
+              'You forgot to enter text.\n\n```{0}codec -e Hello!\n{0}codec -d SGVsbG8h```'.format(prefix) # 1.14.8
+            ],
+            [ # 1.15
+              'About bot', # 1.15.0
+              '{0} is a simple and extensible bot from Tinelix. This bot is a replacement for the Highflash bot, which was crude enough to run for monitoring bots. But don\'t worry, the Vision bot has (albeit imperfect) integration with the SQlite3 database, when there was only primitive JSON in Highflash. The bot was written from scratch and took into account the mistakes made during the development of the Highflash bot. It develops not only thanks to you, but also to the author (Tinelix) with its productivity. He can ask you the weather, encrypt or decrypt texts, show random and rather interesting photos from Reddit and Unsplash, play Crystal Ball, etc.'.format(name), # 1.15.1
+              'Written in', # 1.15.2
+              'Author', # 1.15.3
+              'Bots Monitoring', # 1.15.4
+              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)', # 1.15.5
+              'Links', # 1.15.6
+              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)' # 1.15.7
+            ],
+            [ # 1.16
+              'Polling', # 1.16.0
+              '', # 1.16.1
+              'Time has gone! End time: {0}', # 1.16.2
+              'Polling is over', # 1.16.3
+              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}poll How did you meet 2021? Good or bad? -o [Awesome],[Good],[I don\'t care],[So bad] 2020-01-10=20:00```'.format(prefix), # 1.16.4
+              'The voting end date must not be earlier than today.'
+            ],
+            [ # 1.16
+              'Search for a user by discriminator', # 1.16.0
+              'Total results: {0}', # 1.16.1
+            ],
+            [ # 1.17
+              'Reputation', # 1.17.0
+              'Do you want to promote or demote a person? The selection is made by clicking on the reaction.\n\n👍 **Promote**\n👎 **Demote**', # 1.17.1
+              'You cannot promote or demote yourself!', # 1.17.2
+              'Okay, you demoted it.', # 1.17.3
+              'Okay, you promoted it.', # 1.17.4
+              'Example', # 1.17.5
+              '```{0}rep <Member ID>```'.format(prefix), # 1.17.6
+              'This person is not in our database.', # 1.7.7
+              'You already promoted it.', # 1.7.8
+              'You already demoted it.' # 1.7.9
+            ]
         ]
     ]
