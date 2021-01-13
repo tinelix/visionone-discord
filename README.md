@@ -1,4 +1,4 @@
-<h1>Vision Bot</h1>
+<h1>VisionOne</h1>
 <p>Разработан Тинеликсом в качестве замены бота Highflash. Доступен на данный момент для Discord.<br>
   (<i>Google Translate, i'm sorry</i>: Developed by Tinelix as a replacement for the Highflash bot. Available for now on Discord)<br>
 <i>Лицензируется с условиями GNU Affero General Public License версии 3 для веб-приложений.</i>
@@ -9,9 +9,9 @@
 <br>4. Просмотр рандомных картинок с Unsplash (с оговорками)
 <br>5. Написан на Python с использованием библиотек discord.py и sqlite3
 <p><b>Скриншоты</b>
-<p><img src="https://media.discordapp.net/attachments/794585820312633354/794964876400525332/screenshot_001.png" height="256"></img>
-<img src="https://media.discordapp.net/attachments/794585820312633354/794964890414612490/screenshot_002.png" height="256"></img>
-<img src="https://media.discordapp.net/attachments/794585820312633354/794964896558743582/screenshot_003.png" height="256"></img>
+<p><img src="https://media.discordapp.net/attachments/787270057952542720/798878165325185084/screenshot_001.png" height="256"></img>
+<img src="https://media.discordapp.net/attachments/787270057952542720/798878192193634314/screenshot_002.png" height="256"></img>
+<img src="https://media.discordapp.net/attachments/787270057952542720/798878179234283520/screenshot_003.png" height="256"></img>
 <p><b>Установка</b>
 <p>1. Распаковывайте архив с исходными кодами бота Vision в любое место.
 <br>2. Создайте файл <code>.env</code> в корневой директории для хранения одного токена к Discord API и трех токенов к Unsplash API в качестве локальных переменных терминала. Файловые системы в Linux спрячут этот файл сами (могут и не везде, так что советую создавать этот файл <b>в корневой!</b>). Формат файла <code>.env</code> увидите чуть ниже (не забывайте подменять на соответствующие токены, а узнать можно по этим ссылкам).
