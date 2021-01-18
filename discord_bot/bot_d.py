@@ -11,6 +11,9 @@ import json
 import numexpr
 import gc
 import keep_alive
+import cpuinfo
+import psutil
+
 keep_alive.keep_alive()
 
 from requests.auth import HTTPBasicAuth
@@ -347,7 +350,7 @@ async def on_message(message):
                 else:
                   await help_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, en_US.get(), botconfig['accent1'])
             if message.content.startswith(botconfig['prefix'] + 'state'):
-                await state_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color, connection, cursor)
+                await state_cmd(bot, discord, sqlite3, message, botconfig, os, platform, datetime, one_result, localization, embed_color, connection, cursor, cpuinfo, psutil)
             if message.content.startswith(botconfig['prefix'] + 'eval'):
                 await eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, en_US, guild_result, intents, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'guilds'):
@@ -366,9 +369,9 @@ async def on_message(message):
                 if args[1] == "-tz":
                     await settings.set_timezone(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis)
                 if args[1] == "-mc":
-                    await settings.switch_msgcounter(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis)
+                    await settings.switch_msgcounter(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis,guild_result)
                 if args[1] == "-ec":
-                    await settings.set_embed_color(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis, embed_color)
+                    await settings.set_embed_color(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis, embed_color, guild_result)
                 if args[1] == "-welcm":
                     await settings.set_welcome_message(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis, embed_color)
                 if args[1] == "-byem":

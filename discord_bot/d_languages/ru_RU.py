@@ -39,8 +39,16 @@ def get():
                     'Дата сборки Python',
                     'Версии пакетов',
                     'Аналитика',
-                    'Автор бота',
-                    'Ссылки',
+                    ' ядро',
+                    ' ядра',
+                    ' ядер',
+                    ' МГц',
+                    'Оперативная память',
+                    ' кБ',
+                    ' МБ',
+                    ' ГБ',
+                    ' свободно',
+                    'Идет сбор данных, так как это может занимать время.'
                 ],
                 [
                     'Настройки',
@@ -236,7 +244,7 @@ def get():
                 'Вы должны обязательно включить функции сообщества на Вашем Discord-сервере для публикации новостей.', # 1.13.1
                 'Вы забыли указать сообщение для публикации.', # 1.13.2
                 'Команда недоступна, так как у Вас недостаточно прав на управление сообщениями.',
-                'Сначала переключитесь на новостной канал.'
+                'Сначала переключитесь на новостной канал.\n\n**Инфа для креаторов:** Новостные каналы - это и есть каналы с объявлениями, но чтобы постить сообщения, Вам нужно обязательно в настройках канала (не путать с настройками сервера!) поставить галочку в пункте "Канал с объявлениями". Текст этого пункта может отличаться в зависимости от Вашей установленной локализации клиента.'
             ],
             [ # 1.14
               'Кодек', # 1.14.0 
@@ -255,9 +263,9 @@ def get():
               'Написан на', # 1.15.2
               'Автор', # 1.15.3
               'Мониторинги ботов', # 1.15.4
-              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)', # 1.15.5
+              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)\n[top.gg](https://top.gg/bot/785383439196487720)', # 1.15.5
               'Ссылки', # 1.15.5
-              '[Пригласить бота](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[ВКонтакте](https://vk.com/tinelix)\n[YouTube](https://www.youtube.com/channel/UCSPjn_Y0pLdPy6Ncb9NAdww)\n[Сервер в Discord](https://discord.gg/fYRjHvXntj)' # 1.15.6
+              '[Пригласить бота](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[ВКонтакте](https://vk.com/tinelix)\n[YouTube](https://www.youtube.com/channel/UCSPjn_Y0pLdPy6Ncb9NAdww)\n[Сервер в Discord](https://discord.gg/fYRjHvXntj)\n[Наш саппорт-сервер](https://discord.gg/HAt6K2QuJU)' # 1.15.6
             ],
             [ # 1.16
               'Голосование', # 1.16.0

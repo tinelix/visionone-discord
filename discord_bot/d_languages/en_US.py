@@ -12,15 +12,15 @@ def get():
                 ' - simple and slightly extensible. Developed by Tinelix.\n**Prefix:** `{0}`\n\n**Did you know that...** {1}', # 1.0.0
                 [ # 1.0.1
                   'General', # 1.0.1.0
-                  '`help` `state` `profile` `feedback` `info`' # 1.0.1.1
+                  '`help`, `state`, `profile`, `feedback`, `info`' # 1.0.1.1
                 ],
                 [ # 1.0.2
                   'Fun', # 1.0.2.0
-                  '`=photo`' # 1.0.2.1
+                  '`photo`, `8ball` (`crystball`)' # 1.0.2.1
                 ],
                 [ # 1.0.3
                   'Management', # 1.0.3.0
-                  '`=settings`' # 1.0.3.1
+                  '`settings`, `post`' # 1.0.3.1
                 ],
                 [ # 1.0.4
                   'Miscellaneous', # 1.0.4.0
@@ -38,8 +38,16 @@ def get():
                 'Python build date', # 1.1.6
                 'Packages versions', # 1.1.7
                 'Analytics', # 1.1.8
-                'Bot author', # 1.1.9
-                'Links' # 1.1.10
+                ' core', # 1.1.9
+                ' cores', # 1.1.10
+                ' cores', # 1.1.11
+                ' MHz', # 1.1.12
+                'RAM', # 1.1.13
+                ' kB', # 1.1.14
+                ' MB', # 1.1.15
+                ' GB', # 1.1.16
+                ' free', # 1.1.17
+                'Data collection in progress as it may take time.' # 1.1.18
             ],
             [ # 1.2
                 'Settings', # 1.2.0
@@ -249,10 +257,10 @@ def get():
               '{0} is a simple and extensible bot from Tinelix. This bot is a replacement for the Highflash bot, which was crude enough to run for monitoring bots. But don\'t worry, the Vision bot has (albeit imperfect) integration with the SQlite3 database, when there was only primitive JSON in Highflash. The bot was written from scratch and took into account the mistakes made during the development of the Highflash bot. It develops not only thanks to you, but also to the author (Tinelix) with its productivity. He can ask you the weather, encrypt or decrypt texts, show random and rather interesting photos from Reddit and Unsplash, play Crystal Ball, etc.'.format(name), # 1.15.1
               'Written in', # 1.15.2
               'Author', # 1.15.3
-              'Bots Monitoring', # 1.15.4
-              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)', # 1.15.5
+              'Bots Monitorings', # 1.15.4
+              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)\n[top.gg](https://top.gg/bot/785383439196487720)', # 1.15.5
               'Links', # 1.15.6
-              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)' # 1.15.7
+              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)' # 1.15.7
             ],
             [ # 1.16
               'Polling', # 1.16.0
