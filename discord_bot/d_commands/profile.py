@@ -122,6 +122,11 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		    inline=False)
 	except:
 		pass
+	if a_user.bot == False:
+		userprofile_content.add_field(
+			    name=str(localization[1][3][15]),
+			    value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
+			    inline=False)
 	msg = await message.channel.send(embed=userprofile_content)
 	if str(a_user.avatar_url_as(
 	    format=None, static_format="jpeg", size=4096)) != "" or str(
@@ -191,6 +196,11 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 				    inline=False)
 			except:
 				pass
+			if a_user.bot == False:
+				userprofile_changed.add_field(
+			    name=str(localization[1][3][15]),
+			    value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
+			    inline=False)
 			await msg.edit(embed=userprofile_changed)
 
 	@bot.event
@@ -206,7 +216,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 
 async def get_help(bot, discord, message, botconfig, platform, os, datetime,
                    one_result, localization, args, unix_time_millis,
-                   connection, cursor, embed_color):
+                   connection, cursor, embed_color, prefix):
 	if one_result[3] < 0:
 		your_timezone = "-" + str(-round(one_result[3] / 60 / 60 / 1000, 1))
 	if one_result[3] > 0:
@@ -219,10 +229,10 @@ async def get_help(bot, discord, message, botconfig, platform, os, datetime,
 		msgcounter = str(localization[1][5][3])
 	profilehelp_content = discord.Embed(
 	    title=str(localization[1][5][0]),
-	    description=str(localization[1][5][2]) + msgcounter + ", " + str(
+	    description=str(localization[1][5][2]).format(prefix) + msgcounter + ", " + str(
 	        localization[1][5][4]) + your_timezone + str(localization[1][5][5])
 	    + ", " + str(localization[1][5][6]) + "\n\n" + str(
-	        localization[1][5][1]),
+	        localization[1][5][1]).format(prefix),
 	    color=embed_color)
 	await message.channel.send(embed=profilehelp_content)
 

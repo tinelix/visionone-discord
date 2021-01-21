@@ -1,9 +1,9 @@
 import base64
 import binascii
 
-async def decoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary):
+async def decoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary, prefix):
   if " ".join(args[2:]) == "" or " ".join(args[2:]) == " " or " ".join(args[2:]) == None:
-    no_args = discord.Embed(title=localization[1][14][0], description=localization[1][14][8], color=embed_color)
+    no_args = discord.Embed(title=localization[1][14][0], description=str(localization[1][14][8]).format(prefix), color=embed_color)
     return await message.channel.send(embed=no_args)
   decoder_content = discord.Embed(title=localization[1][14][0], description=localization[1][14][1] + "\n\n" + localization[1][14][3], color=embed_color)
   msg = await message.channel.send(embed=decoder_content)
@@ -48,9 +48,9 @@ async def decoder(bot, discord, message, botconfig, os, platform, datetime, one_
         decoder_result_content.add_field(name=str(localization[1][14][4]), value='```' + str(result) + '```', inline=True)
         await msg.edit(embed=decoder_result_content)
 
-async def encoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary):
+async def encoder(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, args, binary, prefix):
   if " ".join(args[2:]) == "" or " ".join(args[2:]) == " " or " ".join(args[2:]) == None:
-    no_args = discord.Embed(title=localization[1][14][0], description=localization[1][14][8], color=embed_color)
+    no_args = discord.Embed(title=localization[1][14][0], description=str(localization[1][14][8]).format(prefix), color=embed_color)
     return await message.channel.send(embed=no_args)
   decoder_content = discord.Embed(title=localization[1][14][0], description=localization[1][14][2] + "\n\n" + localization[1][14][3], color=embed_color)
   msg = await message.channel.send(embed=decoder_content)
@@ -109,6 +109,6 @@ async def encoder(bot, discord, message, botconfig, os, platform, datetime, one_
             await msg.edit(content=str('```' + str(result) + '```'), embed=decoder_result_content)
           except:
             await msg.edit(content='', embed=decoder_result_content)
-async def get_help(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color):
-  help_content = discord.Embed(title=localization[1][14][0], description=localization[1][14][5], color=embed_color)
+async def get_help(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, prefix):
+  help_content = discord.Embed(title=localization[1][14][0], description=str(localization[1][14][5]).format(prefix), color=embed_color)
   await message.channel.send(embed=help_content)

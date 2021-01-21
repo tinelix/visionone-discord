@@ -1,10 +1,10 @@
 import random
 
-async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, unsplash, time_diff, bot_data_result, cursor, connection, embed_color, reddit):
+async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, unsplash, time_diff, bot_data_result, cursor, connection, embed_color, reddit, prefix):
   args = message.content.split();
   try:
     if " ".join(args[1:]) == "" or " ".join(args[1:]) == " " or " ".join(args[1:]) == None:
-      no_args = discord.Embed(title=localization[1][8][0], description=localization[1][8][5], color=embed_color)
+      no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
       return await message.channel.send(embed=no_args)
     if args[1] == "-u":
       if time_diff >= 3600000:
@@ -75,6 +75,6 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
               photo_changed.set_image(url=photo.url)
               await msg.edit(embed=photo_changed)
   except:
-    no_args = discord.Embed(title=localization[1][8][0], description=localization[1][8][5], color=embed_color)
+    no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
     pass
     return await message.channel.send(embed=no_args)

@@ -1,5 +1,5 @@
 import importlib.util
-spec = importlib.util.spec_from_file_location("botconfig", "/home/runner/visionbot/discord_bot/discord_botconfig.py")
+spec = importlib.util.spec_from_file_location("botconfig", "./discord_bot/discord_botconfig.py")
 botconfig = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(botconfig)
 def get():
@@ -9,7 +9,7 @@ def get():
         'English', # 0
         [ # 1
             [ # 1.0
-                ' - simple and slightly extensible. Developed by Tinelix.\n**Prefix:** `{0}`\n\n**Did you know that...** {1}', # 1.0.0
+                ' - simple and slightly extensible. Developed by Tinelix.\n**Prefix:** `{0}`{1}\n\n**Did you know that...** {2}', # 1.0.0
                 [ # 1.0.1
                   'General', # 1.0.1.0
                   '`help`, `state`, `profile`, `feedback`, `info`' # 1.0.1.1
@@ -24,7 +24,7 @@ def get():
                 ],
                 [ # 1.0.4
                   'Miscellaneous', # 1.0.4.0
-                  '`calc` `weather` `codec` `poll`' # 1.0.4.1
+                  '`calc`, `weather`, `codec`, `poll`' # 1.0.4.1
                 ],
                 '**Prefix:** ' # 1.0.5
             ],
@@ -46,15 +46,14 @@ def get():
                 ' kB', # 1.1.14
                 ' MB', # 1.1.15
                 ' GB', # 1.1.16
-                ' free', # 1.1.17
-                'Data collection in progress as it may take time.' # 1.1.18
+                ' free' # 1.1.17
             ],
             [ # 1.2
                 'Settings', # 1.2.0
-                'To access the desired setting, click on one of the appropriate reactions.\n\n**🗣️ Bot language**\n**🕓 Timezone**\n**🗨️ Messages count**\n**🌈 Custom embed color**', # 1.2.1
+                'To access the desired setting, click on one of the appropriate reactions.\n\n**🗣️ Bot language**\n**🕓 Timezone**\n**🗨️ Messages count**\n**🌈 Custom embed color**\n🚩 **Custom prefix** (beta)\n🏆 **Level system** (beta)\n👋 **Welcome/goodbye messages** (beta)', # 1.2.1
                 [ # 1.2.2
                     'Bot language', # 1.2.2.0
-                    'To change the value, enter the commands below.\n\n**🇷🇺 Russian**\n```{0}set -l ru-RU```\n\n**🇺🇸 English**\n```{0}set -l en-US```'.format(prefix) # 1.2.2.1
+                    'To change the value, enter the commands below.\n\n**🇷🇺 Russian**\n```{0}set -l ru-RU```\n\n**🇺🇸 English**\n```{0}set -l en-US```' # 1.2.2.1
                 ],
                 [ # 1.2.3
                     'Timezone', # 1.2.3.0
@@ -62,7 +61,7 @@ def get():
                     'Valid values', # 1.2.3.2
                     '-120 to 140 (UTC)', # 1.2.3.3
                     'Example', # 1.2.3.4
-                    '```{0}set -tz -80\n{0}set -tz 30\n{0}set -tz 55```'.format(prefix), # 1.2.3.5
+                    '```{0}set -tz -80\n{0}set -tz 30\n{0}set -tz 55```', # 1.2.3.5
                     '-80 for UTC-8:00, 30 for UTC+3:00 (MSK), 55 for UTC+5:30.' # 1.2.3.6
                 ],
                 [ # 1.2.4
@@ -92,9 +91,35 @@ def get():
                     'Valid values', # 1.2.7.1
                     '`red`, `orange`, `yellow`, `green`, `skyblue`, `blue`, `violet`, `rose`', # 1.2.7.2
                     'Example', # 1.2.7.3
-                    '```{0}set -ec skyblue```'.format(prefix), # 1.2.7.4
+                    '```{0}set -ec skyblue```', # 1.2.7.4
                     'Custom embed color (🏠)', # 1.2.7.5
                     'Changes saved.' # 1.2.7.6
+                ],
+                [ # 1.2.8
+                    'Bot prefix', # 1.2.8.0
+                    'Default', # 1.2.8.1
+                    'Example', # 1.2.8.2
+                    '```{0}set -pfx v!```', # 1.2.8.3
+                    'Changes saved.', # 1.2.8.4
+                    '**WARNING!** Since you are currently using the latest version of the bot, then, accordingly, this setting may need to be improved.',
+                ],
+                [ # 1.2.9
+                    'Level system', # 1.2.9.0
+                    'Valid values', # 1.2.9.1
+                    '`on` - enable, `off` - disable', # 1.2.9.2
+                    'Example', # 1.2.9.3
+                    '```{0}set -lvs on```' # 1.2.9.4
+                ],
+                [ # 1.2.10
+                    'Welcome/goodbye messages', # 1.2.10.0
+                    'Valid values', # 1.2.10.1
+                    '`[Channel ID] [Text]` - enable or edit\n`off` - disable', # 1.2.10.2
+                    'Example', # 1.2.10.3
+                    '```{0}set -wl_msg 794585820312633354 Hello, ╭user╮!\n{0}set -gb_msg 794585820312633354 Goodbye, ╭user╮!```', # 1.2.10.4
+                    'Autoformat', # 1.2.10.5
+                    '`{user}` - username\n`{user_with_discrim}` - username with discriminator\n`{gn}` - guildname\n`{mention}` - user mention',  # 1.2.10.6
+                    'Error', # 1.2.10.7
+                    'This channel cannot be found on your Discord server.' # 1.2.10.8
                 ]
             ],
             [ # 1.3
@@ -117,7 +142,8 @@ def get():
                 ],
                 'Roles ', # 1.3.12
                 'Date of sending the post message', # 1.3.13
-                'Reputation' # 1.3.14
+                'Reputation', # 1.3.14
+                'Level' # 1.3.15
             ],
             [ # 1.4
                 'About ', # 1.4.0 
@@ -159,8 +185,8 @@ def get():
             ],
             [ # 1.5
                 'Profile', # 1.5.0
-                '`{0}profile -u [ID]` - find out information about the user.\n`{0}profile -g` - find out information about the server'.format(prefix), # 1.5.1
-                'Your parameters (can be changed in `{0}settings`): '.format(prefix), # 1.5.2
+                '`{0}profile -u [ID]` - find out information about the user.\n`{0}profile -g` - find out information about the server', # 1.5.1
+                'Your parameters (can be changed in `{0}settings`): ', # 1.5.2
                 'message counter enabled', # 1.5.3
                 'UTC', # 1.5.4
                 ' timezone', # 1.5.5
@@ -190,14 +216,14 @@ def get():
                 'Likes', # 1.8.2
                 'Enough for now!', # 1.8.3
                 'It will be possible to see more photos in exactly an hour, since the Unsplash API has a limit of no more than 50 requests per hour. We apologize for any inconvenience caused.', # 1.8.4
-                '`{0}photo -u` - viewing photos from Unsplash.\n`{0}photo -r` - viewing photos from subreddits.'.format(prefix)
+                '`{0}photo -u` - viewing photos from Unsplash.\n`{0}photo -r` - viewing photos from subreddits.' # 1.8.5
             ],
             [ # 1.9
                 'Calculator', # 1.9.0
                 'Listing', # 1.9.1
                 'Result', # 1.9.2
                 'Exception caught!\n', # 1.9.3
-                'You forgot to enter an expression.\n```{0}calc 4 * 58```'.format(prefix), # 1.9.4
+                'You forgot to enter an expression.\n```{0}calc 4 * 58```', # 1.9.4
                 'In this version of the Calculator you can only perform simple arithmetic operations.', # 1.9.5
                 'Available characters', # 1.9.7
                 '`+` - add\n`-` - subtract\n`*` - multiply\n`/` - divide'
@@ -206,7 +232,7 @@ def get():
                 'Feedback', # 1.10.0
                 '{0} Bugtracker'.format(name), # 1.10.1
                 'The author bot will reply shortly, please wait...', # 1.10.2
-                'You forgot to provide arguments.\n\n```{0}feedback Hi!```'.format(prefix), # 1.10.3
+                'You forgot to provide arguments.\n\n```{0}feedback Hi!```', # 1.10.3
                 'You answered:' # 1.10.4
             ],
             [ # 1.11
@@ -247,27 +273,28 @@ def get():
               'You have to choose the data type to encode into a regular string. The selection is made by clicking on the appropriate reaction.', # 1.14.2
               '1️⃣ Base64\n2️⃣ Base32\n3️⃣ Base16\n4️⃣ Binary code', # 1.14.3
               'Result', # 1.14.4
-              '`{0}codec -d` - decode text\n`{0}codec -e` - encode text'.format(prefix), # 1.14.5
+              '`{0}codec -d` - decode text\n`{0}codec -e` - encode text', # 1.14.5
               'The text could not be decoded. Invalid data type selected.', # 1.14.6
               'Viewing in embed message is not possible.' # 1.14.7
-              'You forgot to enter text.\n\n```{0}codec -e Hello!\n{0}codec -d SGVsbG8h```'.format(prefix) # 1.14.8
+              'You forgot to enter text.\n\n```{0}codec -e Hello!\n{0}codec -d SGVsbG8h```' # 1.14.8
             ],
             [ # 1.15
               'About bot', # 1.15.0
               '{0} is a simple and extensible bot from Tinelix. This bot is a replacement for the Highflash bot, which was crude enough to run for monitoring bots. But don\'t worry, the Vision bot has (albeit imperfect) integration with the SQlite3 database, when there was only primitive JSON in Highflash. The bot was written from scratch and took into account the mistakes made during the development of the Highflash bot. It develops not only thanks to you, but also to the author (Tinelix) with its productivity. He can ask you the weather, encrypt or decrypt texts, show random and rather interesting photos from Reddit and Unsplash, play Crystal Ball, etc.'.format(name), # 1.15.1
               'Written in', # 1.15.2
               'Author', # 1.15.3
-              'Bots Monitorings', # 1.15.4
-              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)\n[top.gg](https://top.gg/bot/785383439196487720)', # 1.15.5
+              'Bots Monitoring', # 1.15.4
+              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)', # 1.15.5
               'Links', # 1.15.6
-              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)' # 1.15.7
+              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)', # 1.15.7
+              '[Invite](https://discord.com/oauth2/authorize?client_id=769515555765616690&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)'
             ],
             [ # 1.16
               'Polling', # 1.16.0
               '', # 1.16.1
               'Time has gone! End time: {0}', # 1.16.2
               'Polling is over', # 1.16.3
-              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}poll How did you meet 2021? Good or bad? -o [Awesome],[Good],[I don\'t care],[So bad] 2020-01-10=20:00```'.format(prefix), # 1.16.4
+              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}poll How did you meet 2021? Good or bad? -o [Awesome],[Good],[I don\'t care],[So bad] 2020-01-10=20:00```', # 1.16.4
               'The voting end date must not be earlier than today.'
             ],
             [ # 1.16
@@ -281,10 +308,14 @@ def get():
               'Okay, you demoted it.', # 1.17.3
               'Okay, you promoted it.', # 1.17.4
               'Example', # 1.17.5
-              '```{0}rep <Member ID>```'.format(prefix), # 1.17.6
+              '```{0}rep <Member ID>```', # 1.17.6
               'This person is not in our database.', # 1.7.7
               'You already promoted it.', # 1.7.8
               'You already demoted it.' # 1.7.9
+            ],
+            [ # 1.18
+                'Congratulations!', # 1.18.0
+                '{0} has moved to a new level **{1}**! The main thing is to be active.' # 1.18.1
             ]
         ]
     ]

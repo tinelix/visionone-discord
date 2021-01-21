@@ -1,8 +1,8 @@
-async def rep_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, embed_color, connection, cursor):
+async def rep_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, embed_color, connection, cursor, prefix):
   args = message.content.split();
-  rep_err_b = discord.Embed(title=str(localization[1][17][0]), description=str(localization[1][17][2]), color=embed_color)
-  no_args = discord.Embed(title=localization[1][17][0], color=embed_color)
-  no_args.add_field(name=localization[1][17][5], value=localization[1][17][6])
+  rep_err_b = discord.Embed(title=str(localization[1][17][0]).format(prefix), description=str(localization[1][17][2]), color=embed_color)
+  no_args = discord.Embed(title=str(localization[1][17][0]).format(prefix), color=embed_color)
+  no_args.add_field(name=localization[1][17][5], value=str(localization[1][17][6]).format(prefix))
   try:
     if " ".join(args[1]) == "" or " ".join(args[1]) == " " or " ".join(args[1]) == None or args[1].isdigit() == False:
       return await message.channel.send(embed=no_args)

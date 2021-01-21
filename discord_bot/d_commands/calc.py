@@ -1,6 +1,6 @@
-async def calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr):
+async def calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr, prefix):
         args = message.content.split();
-        no_args = discord.Embed(title=localization[1][9][0], description=localization[1][9][4], color=botconfig['accent1'])
+        no_args = discord.Embed(title=localization[1][9][0], description=str(localization[1][9][4]).format(prefix), color=botconfig['accent1'])
         no_args.add_field(name=localization[1][9][6], value=localization[1][9][7], inline=False)
         if " ".join(args[1:]) == "" or " ".join(args[1:]) == " " or " ".join(args[1:]) == None:
             return await message.channel.send(embed=no_args)

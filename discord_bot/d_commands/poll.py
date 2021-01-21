@@ -3,7 +3,7 @@ def remove_outer_symbols(s):
     right = s.rindex("]", left)
     return s[:left] + s[left+1:right] + s[right+1:]
 
-async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color, connection, cursor):
+async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color, connection, cursor, prefix):
   args = message.content.split(" ");
   args2 = message.content.split("-[]");
   parameter_option = ""
@@ -39,8 +39,12 @@ async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one
         parameter_option += '-o' 
     for args_index in args2: 
       try: 
-        index = args_str.index('[') + 6
-        rindex = args_str.rindex(']') + 7
+        if message.content.startswith(botconfig['prefix']):
+          index = args_str.index('[') + 6
+          rindex = args_str.rindex(']') + 7
+        elif message.content.startswith(prefix):
+          index = args_str.index('[') + 5 + len(prefix)
+          rindex = args_str.rindex(']') + 6 + len(prefix)
         options_str += remove_outer_symbols(args_index[index:rindex])
         options = options_str.split("],[")
       except:
@@ -52,7 +56,7 @@ async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one
     for opt in options:
       option_str += emoji_number[str(options.index(opt))] + " " + options[options.index(opt)] + "\n"
     if args[1] == "" or args[1] == None or args[2] == "" or parameter_option != '-o' or options == [] or args[2] == None or endtimeerr == "Error":
-      no_args = discord.Embed(title=localization[1][16][0], description=localization[1][16][4], color=embed_color)
+      no_args = discord.Embed(title=localization[1][16][0], description=str(localization[1][16][4]).format(prefix), color=embed_color)
       return await message.channel.send(embed=no_args)
     if endtime == 0:
       no_args = discord.Embed(title=localization[1][16][0], description=localization[1][16][5], color=embed_color)
@@ -69,5 +73,5 @@ async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one
         await msg.add_reaction(emoji=emoji)
   except Exception as e:
       print(e)
-      no_args = discord.Embed(title=localization[1][16][0], description=localization[1][16][4], color=embed_color)
+      no_args = discord.Embed(title=localization[1][16][0], description=str(localization[1][16][4]).format(prefix), color=embed_color)
       await message.channel.send(embed=no_args)
