@@ -349,8 +349,11 @@ async def on_message(message):
     # print(guild)
     cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?)", bot_data)
     connection.commit()
-    if guild_result[12] == "Enabled":
+    try:
+      if guild_result[12] == "Enabled":
         await message_to_xp(bot, discord, message, botconfig, platform, os, datetime, one_result, guild_result, localization, unix_time_millis, embed_color, connection, cursor, prefix)
+    except:
+      pass
 
     timingcount = 0
     if message.content.startswith(botconfig['prefix']) or message.content.startswith(guild_result[6]):
@@ -404,11 +407,11 @@ async def on_message(message):
             if message.content.startswith(botconfig['prefix'] + 'profile') or message.content.startswith(guild_result[6] + 'profile'):
                 args = message.content.split();
                 try:
-                    if args[1] == "-u":
+                  if args[1] == "-u":
                         await profile.get_user(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, args, unix_time_millis, connection, cursor, intents, lastmsgtime, embed_color)
-                    if args[1] == "-g":
+                  if args[1] == "-g":
                         await profile.get_guild(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, args, unix_time_millis, connection, cursor, guild_result, intents, embed_color)
-                    else:
+                  else:
                         pass
                 except Exception as e: 
                     print(e)

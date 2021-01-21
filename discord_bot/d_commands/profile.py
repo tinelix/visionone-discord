@@ -17,9 +17,9 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		a_user = message.author
 	try:
 		argsuser = [(a_user.id, 'Russian', 0, 10800000,
-		             unix_time_millis(message.created_at), 'Disabled', 0)]
+		             unix_time_millis(message.created_at), 'Disabled', unix_time_millis(message.created_at), "Disabled", unix_time_millis(message.created_at), 0, 0, 0)]
 		cursor.executemany(
-		    "INSERT OR IGNORE INTO users VALUES(?, ?, ?, ?, ?, ?, ?);",
+		    "INSERT OR IGNORE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);",
 		    argsuser)
 		connection.commit()
 	except:
@@ -32,12 +32,14 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		nick = "_Отсутствует_"
 	else:
 		nick = a_user.nick
-	result = cursor.execute("SELECT * FROM users WHERE userid = " +
-	                        str(a_user.id) + ";").fetchone()
-	if result[5] == "Disabled":
+	result = cursor.execute("SELECT * FROM users WHERE userid = " + str(a_user.id) + ";").fetchone(); 
+	try:   
+		if result[5] == "Disabled":
+			msgcounter = localization[1][3][6]
+		else:
+			msgcounter = str(result[2]) + str(localization[1][3][5])
+	except:
 		msgcounter = localization[1][3][6]
-	else:
-		msgcounter = str(result[2]) + str(localization[1][3][5])
 	if a_user.raw_status == "online":
 		user_status = localization[1][3][11][0]
 	if a_user.raw_status == "idle":
@@ -46,26 +48,32 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		user_status = localization[1][3][11][2]
 	if a_user.raw_status == "offline":
 		user_status = localization[1][3][11][3]
-	joindate_ms = int(unix_time_millis(a_user.joined_at) + one_result[3])
-	joindate = datetime.datetime.fromtimestamp(
-	    (joindate_ms) / 1000)  # 25200000 for UTC+7
-	regdate_ms = int(unix_time_millis(a_user.created_at) + one_result[3])
-	regdate = datetime.datetime.fromtimestamp(
-	    (regdate_ms) / 1000)  # 25200000 for UTC+7
+	try:
+		joindate_ms = int(unix_time_millis(a_user.joined_at) + one_result[3])
+		joindate = datetime.datetime.fromtimestamp(
+		(joindate_ms) / 1000)  # 25200000 for UTC+7
+		regdate_ms = int(unix_time_millis(a_user.created_at) + one_result[3])
+		regdate = datetime.datetime.fromtimestamp(
+		(regdate_ms) / 1000)  # 25200000 for UTC+7
+	except:
+		pass
 	try:
 		if a_user.id == message.author.id:
 			prepostdate_ms = int(lastmsgtime + one_result[3])
 		else:
 			prepostdate_ms = int(result[6] + one_result[3])
 	except:
-		prepostdate_ms = 0
+		pass
 	try:
 		prepostdate = datetime.datetime.fromtimestamp(
 		    (prepostdate_ms) / 1000)  # 25200000 for UTC+7
 	except:
 		pass
-	dbregdate_ms = result[4]
-	dbregdate = datetime.datetime.fromtimestamp(dbregdate_ms / 1000)
+	try:
+	  dbregdate_ms = result[4]
+	  dbregdate = datetime.datetime.fromtimestamp(dbregdate_ms / 1000)
+	except:
+		pass
 	member_roles_a = ""
 	for member_roles in a_user.roles:
 		if member_roles.name != "@everyone":
@@ -77,18 +85,25 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 			member_roles_a += ""
 	if member_roles_a == "" or member_roles_a == None:
 		member_roles_a = "_Нет_"
+	try:
+		rep = "\n**" + str(localization[1][3][14]) + ": **" + str(one_result[7])
+	except:
+		rep = ""
 	userprofile_content = discord.Embed(
 	    title=bot_detector + str(localization[1][3][0]) + str(a_user),
-	    description="**ID: **" + str(a_user.id) + "\n**" + str(localization[1][3][14] + ": **" + str(one_result[7])),
+	    description="**ID: **" + str(a_user.id) + rep,
 	    color=embed_color)
 	userprofile_content.add_field(
 	    name=str(localization[1][3][1]), value=str(nick), inline=True)
 	userprofile_content.add_field(
 	    name=str(localization[1][3][10]), value=user_status, inline=False)
-	userprofile_content.add_field(
+	try:
+	  userprofile_content.add_field(
 	    name=str(localization[1][3][4]) + dbregdate.strftime("%Y-%m"),
 	    value=msgcounter,
 	    inline=False)
+	except:
+		pass
 	userprofile_content.add_field(
 	    name=str(localization[1][3][2]),
 	    value=joindate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" + your_timezone
@@ -98,11 +113,14 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	    url=str(
 	        a_user.avatar_url_as(format=None, static_format="jpeg",
 	                             size=4096)))
-	userprofile_content.add_field(
+	try:
+		userprofile_content.add_field(
 	    name=str(localization[1][3][3]),
 	    value=regdate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" + your_timezone +
 	    ")",
 	    inline=False)
+	except:
+		pass
 	try:
 		userprofile_content.add_field(
 		    name=str(localization[1][3][12]) + "(" +
@@ -123,10 +141,13 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	except:
 		pass
 	if a_user.bot == False:
-		userprofile_content.add_field(
+	  try:
+		  userprofile_content.add_field(
 			    name=str(localization[1][3][15]),
 			    value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
 			    inline=False)
+	  except:
+		  pass
 	msg = await message.channel.send(embed=userprofile_content)
 	if str(a_user.avatar_url_as(
 	    format=None, static_format="jpeg", size=4096)) != "" or str(
@@ -162,7 +183,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 				nick = after.nick
 			userprofile_changed = discord.Embed(
 			    title=bot_detector + str(localization[1][3][0]) + str(after),
-			    description="**ID: **" + str(after.id),
+			    description="**ID: **" + str(after.id) + rep,
 			    color=embed_color)
 			userprofile_changed.add_field(
 			    name=str(localization[1][3][1]), value=str(nick), inline=True)
@@ -183,11 +204,14 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 			    url=str(
 			        after.avatar_url_as(
 			            format=None, static_format="jpeg", size=4096)))
-			userprofile_changed.add_field(
+			try:
+			  userprofile_changed.add_field(
 			    name=str(localization[1][3][3]),
 			    value=regdate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" +
 			    your_timezone + ")",
 			    inline=False)
+			except:
+				pass
 			try:
 				userprofile_changed.add_field(
 				    name=str(localization[1][3][13]),
@@ -197,10 +221,13 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 			except:
 				pass
 			if a_user.bot == False:
-				userprofile_changed.add_field(
-			    name=str(localization[1][3][15]),
-			    value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
-			    inline=False)
+				try:
+					userprofile_changed.add_field(
+					name=str(localization[1][3][15]),
+					value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
+					inline=False)
+				except:
+					pass
 			await msg.edit(embed=userprofile_changed)
 
 	@bot.event

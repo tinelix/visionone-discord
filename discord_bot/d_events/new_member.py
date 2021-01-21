@@ -15,22 +15,25 @@ async def autorole(bot, discord, member, botconfig, cursor, connection):
             await msg.edit(embed=new_member_content)
 
 async def new_member(bot, discord, member, botconfig, cursor, connection):
-  cursor.execute("SELECT * FROM guilds WHERE guildid='" + str(member.guild.id) + "';")
-  guild_result = (cursor.fetchone())
-  search_results = 0
-  for channel in member.guild.channels:
-    if channel.id == guild_result[8]:
-      search_results += 1
-  msgtext = guild_result[9]
   try:
-    msgtext_formatted = msgtext.format(user = member.name, user_with_discrim = str(member.name) + "#" + str(member.discriminator), mention = "<@" + str(member.id) + ">")
-  except:
-    msgtext_formatted = ""
-  if search_results == 1 and guild_result[9] != None and guild_result[9] != "" and guild_result[9] != " " and msgtext_formatted != "":
+    cursor.execute("SELECT * FROM guilds WHERE guildid='" + str(member.guild.id) + "';")
+    guild_result = (cursor.fetchone())
+    search_results = 0
+    for channel in member.guild.channels:
+      if channel.id == guild_result[8]:
+        search_results += 1
+    msgtext = guild_result[9]
+    try:
+      msgtext_formatted = msgtext.format(user = member.name, user_with_discrim = str(member.name) + "#" + str(member.discriminator), mention = "<@" + str(member.id) + ">")
+    except:
+      msgtext_formatted = ""
+    if search_results == 1 and guild_result[9] != None and guild_result[9] != "" and guild_result[9] != " " and msgtext_formatted != "":
       new_member_content = discord.Embed(description=msgtext_formatted, color=botconfig['accent1'])
       msg = await bot.get_channel(guild_result[8]).send(embed=new_member_content)
-  if guild_result is None:
+    if guild_result is None:
       return
+  except:
+    pass
 
 async def member_left(bot, discord, member, botconfig, cursor, connection):
   cursor.execute("SELECT * FROM guilds WHERE guildid='" + str(member.guild.id) + "';")

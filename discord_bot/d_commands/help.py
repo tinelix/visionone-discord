@@ -8,10 +8,16 @@ async def help_cmd(bot, discord, message, botconfig, platform, os, datetime, one
 		    'Все наши ссылки находятся в `info`?',
 		    'Узнать погоду можно в `weather`?',
 		    'Просмотреть рандомные фото можно в `photo`? Вдруг пригодится поставить обои на свой рабочий стол?',
-		    'Что в версии 01R5 (9 января 2020 г.) появилась команда `codec` для зашифровки и расшифровки текста?'
+		    'Начиная с версии VisionOne 01R8 (21 января 2021 г.), стало возможным менять префиксы, получать опыты за сообщения и т.д?',
+        'Игра "Магический шар" генерирует случайные ответы трех типов (да/нет/хз) для заданного вопроса? Обратите внимание, что совпадения случайны, поэтому воспринимайте как игру, а не как реальность.',
+        'Автор {0} (`{1}`) начал строить своего предшественника под названием Highflash в декабре 2018 г. на discord.js (JavaScript).'.format(botconfig['name'], bot.get_user(int(botconfig['owner'])).name + "#" + str(bot.get_user(int(botconfig['owner'])).discriminator))
 		]
 	else:
-		tips = ['All our links on `info` command']
+		tips = [
+      'All our links on `info` command',
+      'Starting with VisionOne 01R8 (January 21, 2021), has it become possible to change prefixes, get experiences for messages, etc?',
+      'Author {0} (`{1}`) started building his predecessor called Dmitryev Bot (now Highflash) in December 2018 on discord.js (JavaScript).'.format(botconfig['name'], bot.get_user(int(botconfig['owner'])).name + "#" + str(bot.get_user(int(botconfig['owner'])).discriminator))
+    ]
 	try:
 		if guild_result[6] == botconfig['prefix']:
 			custom_prefix = ""
