@@ -12,7 +12,18 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	if one_result[3] == 0:
 		your_timezone = ""
 	try:
-		a_user = await message.guild.fetch_member(subargs)
+		search_results = 0
+		ids = []
+		member_name_lower = ""
+		if " ".join(args[2:]).isdigit() == True:
+		  a_user = await message.guild.fetch_member(subargs)
+		else:
+			for member in message.guild.members:
+				member_name_lower = member.name.lower()
+				if member_name_lower.startswith(" ".join(args[2:]).lower()) or member.name.startswith(" ".join(args[2:])):
+					search_results = 1
+					ids.append(member.id)
+			a_user = await message.guild.fetch_member(ids[0])
 	except:
 		a_user = message.author
 	try:

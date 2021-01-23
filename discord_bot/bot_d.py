@@ -429,7 +429,7 @@ async def on_message(message):
             if message.content.startswith(botconfig['prefix'] + 'photo') or message.content.startswith(guild_result[6] + 'photo'):
                 await photo_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, unsplash, time_diff, bot_data_result, cursor, connection, embed_color, reddit, prefix)
             if message.content.startswith(botconfig['prefix'] + 'calc') or message.content.startswith(guild_result[6] + 'calc'):
-                await calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr, prefix)
+                await calc_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, numexpr, prefix, embed_color)
             if message.content.startswith(botconfig['prefix'] + 'feedback') or message.content.startswith(guild_result[6] + 'feedback'):
                 await feedback_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, embed_color, prefix)
             if message.content.startswith(botconfig['prefix'] + 'weather') or message.content.startswith(guild_result[6] + 'weather'):

@@ -13,7 +13,7 @@ async def message_to_xp(bot, discord, message, botconfig, platform, os, datetime
         lv=math.floor(lvch)
         print(((one_result[9]) * (50 + ((one_result[9]) * 10))) * (one_result[9] + 1))
         if one_result[9] < lv:
-            if message.content.startswith(botconfig['prefix']) is False or message.content.startswith(guild_result[6]) is False:
+            if message.content.startswith(botconfig['prefix']) is False and message.content.startswith(guild_result[6]) is False and one_result[9] > 0:
             	new_level_msg = discord.Embed(title=localization[1][18][0], description=str(localization[1][18][1]).format('<@' + str(message.author.id) + '>', lv), color=embed_color)
             	await message.channel.send(embed=new_level_msg)
             cursor.executemany('UPDATE users SET level=? where userid=?', [(lv, message.author.id)])
