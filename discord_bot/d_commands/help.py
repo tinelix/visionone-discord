@@ -4,13 +4,14 @@ import random
 async def help_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, embed_color, guild_result):
 	if localization[0] == "Russian":
 		tips = [
-		    'Для просмотра авторской информационной программы "Новости Тинеликса" достаточно написать команду `tnews`?',
+		    'С помощью VisionOne можно проводить голосования?',
 		    'Все наши ссылки находятся в `info`?',
 		    'Узнать погоду можно в `weather`?',
 		    'Просмотреть рандомные фото можно в `photo`? Вдруг пригодится поставить обои на свой рабочий стол?',
-		    'Начиная с версии VisionOne 01R8 (21 января 2021 г.), стало возможным менять префиксы, получать опыты за сообщения и т.д?',
+		    'Поступили две новости в `=tnews`?',
         'Игра "Магический шар" генерирует случайные ответы трех типов (да/нет/хз) для заданного вопроса? Обратите внимание, что совпадения случайны, поэтому воспринимайте как игру, а не как реальность.',
-        'Автор {0} (`{1}`) начал строить своего предшественника под названием Highflash в декабре 2018 г. на discord.js (JavaScript).'.format(botconfig['name'], bot.get_user(int(botconfig['owner'])).name + "#" + str(bot.get_user(int(botconfig['owner'])).discriminator))
+        'Автор {0} (`{1}`) начал строить своего предшественника под названием Highflash в декабре 2018 г. на discord.js (JavaScript).'.format(botconfig['name'], bot.get_user(int(botconfig['owner'])).name + "#" + str(bot.get_user(int(botconfig['owner'])).discriminator)),
+        'Можно послушать музыку в `=music`? В этой команде присутствует поддержка плейлиста, но такая своеобразная.'
 		]
 	else:
 		tips = [
@@ -23,6 +24,8 @@ async def help_cmd(bot, discord, message, botconfig, platform, os, datetime, one
 			custom_prefix = ""
 		else:
 			custom_prefix = " `" + guild_result[6] + "`"
+		if custom_prefix == None:
+			custom_prefix = "="
 	except Exception as e:
 		print(e)
 	lucky_num = random.randint(0, len(tips) - 1)

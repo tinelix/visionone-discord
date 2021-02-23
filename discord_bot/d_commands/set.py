@@ -1,29 +1,75 @@
 from .settings import settings_cmd
 
-async def set_bot_language(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, unix_time_millis):
+async def set_bot_language(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, unix_time_millis, en_US, ru_RU, guild_result, prefix, embed_color, localization):
     subargs = args[2]
     if subargs == "en-US":
-        try:
-            user = [(message.author.id, 'English', one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
-        except:
-            user = [(message.author.id, 'English', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0 ,0)]
-        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
-        connection.commit()
-        current_language = "English"
-        botlanguage_content = discord.Embed(title="Bot language", description="Your language choosed to " + current_language, color=botconfig['accent1'])
-        await message.channel.send(embed=botlanguage_content)
+        localization = en_US.get()
+        botlanguage_choice = discord.Embed(title=str(localization[1][2][2][0]), description=str(localization[1][2][5][1]), color=botconfig['accent1'])
+        nopermerr_content = discord.Embed(title=str(localization[1][2][2][0]), description=str(localization[1][2][5][4]), color=botconfig['accent1'])
+        msg = await message.channel.send(embed=botlanguage_choice)
+        await msg.add_reaction(emoji="🏠")
+        await msg.add_reaction(emoji="👤")
+        @bot.event
+        async def on_reaction_add(reaction, user):
+            channel = reaction.message.channel
+            if reaction.emoji == "🏠" and user.id != bot.user.id:
+              if message.author.guild_permissions.manage_guild == True:
+                try:
+                  guild = [(message.guild.id, guild_result[1], guild_result[2], guild_result[3], guild_result[4], guild_result[5], guild_result[6], 'English', guild_result[8], guild_result[9], guild_result[10], guild_result[11], guild_result[12])]
+                except:
+                  guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', 'Standart', '=', 'English', 0, '', 0, '', "Enabled")]
+                cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
+                connection.commit()
+                current_language = "English"
+                botlanguage_content = discord.Embed(title="Bot language", description="Your language choosed to " + current_language, color=botconfig['accent1'])
+                await msg.edit(embed=botlanguage_content) 
+              else:
+                msg.edit(embed=nopermerr_content)
+            if reaction.emoji == "👤" and user.id != bot.user.id:
+              try:
+                user = [(message.author.id, 'English', one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
+              except:
+                user = [(message.author.id, 'English', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0 ,0)]
+              cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
+              connection.commit()
+              current_language = "English"
+              botlanguage_content = discord.Embed(title="Bot language", description="Your language choosed to " + current_language, color=botconfig['accent1'])
+              await msg.edit(embed=botlanguage_content)
     if subargs == "ru-RU":
-        try:
-            user = [(message.author.id, 'Russian', one_result[2] + 1, one_result[3], one_result[4], "Enabled", unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
-        except:
-            user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at), 0, 0, 0)]
-        cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
-        connection.commit()     
-        current_language = "Russian"
-        botlanguage_content = discord.Embed(title="Язык бота", description="Ваш язык выбран на " + current_language, color=botconfig['accent1'])
-        await message.channel.send(embed=botlanguage_content)
+        localization = ru_RU.get()
+        botlanguage_choice = discord.Embed(title=str(localization[1][2][2][0]), description=str(localization[1][2][5][1]), color=botconfig['accent1'])
+        nopermerr_content = discord.Embed(title=str(localization[1][2][2][0]), description=str(localization[1][2][5][4]), color=botconfig['accent1'])
+        msg = await message.channel.send(embed=botlanguage_choice)
+        await msg.add_reaction(emoji="🏠")
+        await msg.add_reaction(emoji="👤")
+        @bot.event
+        async def on_reaction_add(reaction, user):
+            channel = reaction.message.channel
+            if reaction.emoji == "🏠" and user.id != bot.user.id:
+              if message.author.guild_permissions.manage_guild == True:
+                try:
+                  guild = [(message.guild.id, guild_result[1], guild_result[2], guild_result[3], guild_result[4], guild_result[5], guild_result[6], 'Russian', guild_result[8], guild_result[9], guild_result[10], guild_result[11], guild_result[12])]
+                except:
+                  guild = [(message.guild.id, str(message.guild.region), 1, unix_time_millis(message.created_at), 'Enabled', 'Standart', '=', 'Russian', 0, '', 0, '', "Enabled")]
+                cursor.executemany("INSERT OR REPLACE INTO guilds VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", guild)
+                connection.commit()
+                current_language = "Russian"
+                botlanguage_content = discord.Embed(title="Язык бота", description="Ваш язык изменен на " + current_language + "\n\nОбратите внимание, что настройки вступят в силу только после регистрации пользователя в нашу БД. В таком случае нужно поменять язык в личных настройках.", color=botconfig['accent1'])
+                await msg.edit(embed=botlanguage_content) 
+              else:
+                msg.edit(embed=nopermerr_content)
+            if reaction.emoji == "👤" and user.id != bot.user.id:
+              try:
+                user = [(message.author.id, 'Russian', one_result[2] + 1, one_result[3], one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
+              except:
+                user = [(message.author.id, 'Russian', 1, 10800000, unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0 ,0)]
+              cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
+              connection.commit()
+              current_language = "Russian"
+              botlanguage_content = discord.Embed(title="Язык бота", description="Ваш язык изменен на " + current_language, color=botconfig['accent1'])
+              await msg.edit(embed=botlanguage_content)
     if subargs != "en-US" and subargs != "ru-RU":
-        await settings_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result)
+        await settings_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, unix_time_millis, embed_color, guild_result, prefix)
         
 async def set_timezone(bot, discord, message, botconfig, os, platform, datetime, one_result, args, connection, cursor, localization, unix_time_millis):
     if one_result[3] < 0:
@@ -44,13 +90,13 @@ async def set_timezone(bot, discord, message, botconfig, os, platform, datetime,
                     user = [(message.author.id, one_result[1], one_result[2] + 1, int((-int(subargs2) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
                 except:
                     user = [(message.author.id, "Russian", 0, 10800000, unix_time_millis(message.created_at), "Enabled", unix_time_millis(message.created_at), 0, 0, 0)]
-            cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
+            cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
             connection.commit()
             timezone_content = discord.Embed(title=str(localization[1][2][3][0]), description=localization[1][2][4][2] + your_timezone, color=botconfig['accent1'])
             await message.channel.send(embed=timezone_content)
         else:
             return await message.channel.send(embed=stringnotisdigit_content)
-    if int(subargs) >= -120 and int(subargs) <= 140:
+    if int(subargs) >= 0:
         try:
             user = [(message.author.id, one_result[1], one_result[2] + 1, int((int(subargs) / 10) * 60 * 60 * 1000), one_result[4], one_result[5], unix_time_millis(message.created_at), one_result[7], one_result[8], one_result[9])]
         except:

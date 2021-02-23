@@ -16,7 +16,7 @@ async def weather_cmd(bot, discord, sqlite3, message, botconfig, os, platform, d
     res = requests.get("http://api.openweathermap.org/data/2.5/weather",
                  params={'id': city_id, 'units': 'metric', 'lang': localization[1][11][10], 'APPID': os.environ['OPENWMAPT']})
     res2 = requests.get("http://api.openweathermap.org/data/2.5/forecast",
-                           params={'id': city_id, 'units': 'metric', 'lang': 'ru', 'cnt': '5', 'APPID': os.environ['OPENWMAPT']})
+                           params={'id': city_id, 'units': 'metric', 'lang': localization[1][11][10], 'cnt': '5', 'APPID': os.environ['OPENWMAPT']})
     data = res.json()
     forecast_five_days_json = res2.json()
     forecast_str = ""

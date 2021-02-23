@@ -16,7 +16,7 @@ def get():
                 ],
                 [ # 1.0.2
                   'Fun', # 1.0.2.0
-                  '`photo`, `8ball` (`crystball`)' # 1.0.2.1
+                  '`photo`, `8ball` (`crystball`), `music`' # 1.0.2.1
                 ],
                 [ # 1.0.3
                   'Management', # 1.0.3.0
@@ -24,7 +24,7 @@ def get():
                 ],
                 [ # 1.0.4
                   'Miscellaneous', # 1.0.4.0
-                  '`calc`, `weather`, `codec`, `poll`' # 1.0.4.1
+                  '`calc`, `weather`, `codec`, `poll`, `rep`, `embed`' # 1.0.4.1
                 ],
                 '**Prefix:** ' # 1.0.5
             ],
@@ -50,7 +50,7 @@ def get():
             ],
             [ # 1.2
                 'Settings', # 1.2.0
-                'To access the desired setting, click on one of the appropriate reactions.\n\n**🗣️ Bot language**\n**🕓 Timezone**\n**🗨️ Messages count**\n**🌈 Custom embed color**\n🚩 **Custom prefix** (beta)\n🏆 **Level system** (beta)\n👋 **Welcome/goodbye messages** (beta)', # 1.2.1
+                'To access the desired setting, click on one of the appropriate reactions.\n\n**🗣️ Bot language**\n**🕓 Timezone**\n**🗨️ Messages count**\n**🌈 Custom embed color**\n🚩 **Custom prefix**\n🏆 **Level system**\n👋 **Welcome/goodbye messages**', # 1.2.1
                 [ # 1.2.2
                     'Bot language', # 1.2.2.0
                     'To change the value, enter the commands below.\n\n**🇷🇺 Russian**\n```{0}set -l ru-RU```\n\n**🇺🇸 English**\n```{0}set -l en-US```' # 1.2.2.1
@@ -225,8 +225,11 @@ def get():
                 'Exception caught!\n', # 1.9.3
                 'You forgot to enter an expression.\n```{0}calc 4 * 58```', # 1.9.4
                 'In this version of the Calculator you can only perform simple arithmetic operations.', # 1.9.5
-                'Available characters', # 1.9.7
-                '`+` - add\n`-` - subtract\n`*` - multiply\n`/` - divide'
+                'Available characters', # 1.9.6
+                '`+` - add\n`-` - subtract\n`*` - multiply\n`/` - divide', # 1.9.7
+                'Attempt to divide by zero', # 1.9.8
+                'The expression is too large', # 1.9.9
+                'Variables are not accepted', # 1.9.10
             ],
             [ # 1.10
                 'Feedback', # 1.10.0
@@ -256,7 +259,7 @@ def get():
                 'Crystal Ball', # 1.12.0
                 'Question', # 1.12.1
                 'He says', # 1.12.2
-                'All matches are random.', # 1.12.3
+                'All matches are random. Think of it as a game, not as a reality.', # 1.12.3
                 'Error', # 1.12.4
                 'First ask him a question.' # 1.12.5
             ],
@@ -283,8 +286,8 @@ def get():
               '{0} is a simple and extensible bot from Tinelix. This bot is a replacement for the Highflash bot, which was crude enough to run for monitoring bots. But don\'t worry, the Vision bot has (albeit imperfect) integration with the SQlite3 database, when there was only primitive JSON in Highflash. The bot was written from scratch and took into account the mistakes made during the development of the Highflash bot. It develops not only thanks to you, but also to the author (Tinelix) with its productivity. He can ask you the weather, encrypt or decrypt texts, show random and rather interesting photos from Reddit and Unsplash, play Crystal Ball, etc.'.format(name), # 1.15.1
               'Written in', # 1.15.2
               'Author', # 1.15.3
-              'Bots Monitoring', # 1.15.4
-              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)', # 1.15.5
+              'Bots Monitorings', # 1.15.4
+              '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)\n[top.gg](https://top.gg/bot/785383439196487720)\n[discord.bots.gg](https://discord.bots.gg/bots/785383439196487720)', # 1.15.5
               'Links', # 1.15.6
               '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)', # 1.15.7
               '[Invite](https://discord.com/oauth2/authorize?client_id=769515555765616690&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)'
@@ -294,12 +297,8 @@ def get():
               '', # 1.16.1
               'Time has gone! End time: {0}', # 1.16.2
               'Polling is over', # 1.16.3
-              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}poll How did you meet 2021? Good or bad? -o [Awesome],[Good],[I don\'t care],[So bad] 2020-01-10=20:00```', # 1.16.4
+              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}poll What do you like the most? -o [90s],[2000s],[2010s],[2020s] 2021-02-12=18:00```', # 1.16.4
               'The voting end date must not be earlier than today.'
-            ],
-            [ # 1.16
-              'Search for a user by discriminator', # 1.16.0
-              'Total results: {0}', # 1.16.1
             ],
             [ # 1.17
               'Reputation', # 1.17.0
@@ -316,6 +315,42 @@ def get():
             [ # 1.18
                 'Congratulations!', # 1.18.0
                 '{0} has moved to a new level **{1}**! The main thing is to be active.' # 1.18.1
+            ],
+            [ # 1.19
+              'Access denied.' # 1.19.0
+            ],
+            [ # 1.20
+              'Embed messages constructor', # 1.20.0
+              'You forgot to supply the required arguments to this or to the command enter arguments as arguments with `[` and `],`. Follow the example below.  And yes, between the parentheses, a comma without any spaces is required.\n\n```{0}embed Text -t [Title],[Footer]```' # 1.20.1
+            ],
+            [ # 1.21
+              'Music player', # 1.21.0
+              'No results found. Try another query.', # 1.21.1
+              'API is temporarily unavailable.', # 1.21.2
+              'Search results', # 1.21.3
+              '**Now playing:** {0} ({1}/{2})\n{3} of {4}', # 1.21.4
+              'Queues', # 1.21.5
+              'First join any voice channel, then try again.', # 1.21.6
+              'Listening stopped.', # 1.21.7
+              'Are you sure want to clear the playlist?\nTo confirm, you need to collect 3 reactions.', # 1.21.8
+              'Playlist cleared.', # 1.21.9
+              'Used by the YouTube Data API', # 1.21.10
+              'Something went wrong...', # 1.21.11
+              'Loading {0} of {1} MB...', # 1.21.12
+              'The track should not exceed 30 minutes in duration.', # 1.21.13
+              'To play music, just specify a search query on YouTube.\n\n```{0}music Tobu Cacao```', # 1.21.14
+              '**Paused:** {0} ({1}/{2})\n{3} of {4}', # 1.21.15
+              'There is currently no streaming media playback available.', # 1.21.16
+              'There was an error displaying search results. Most likely, this is some kind of issue on the side of the `youtube_search` module. Try searching again.' # 1.21.17
             ]
         ]
     ]
+
+def longdate():
+    return ['English', 'January {0}, {1}', 'February {0}, {1}', 'March {0}, {1}', 'April {0}, {1}', 'May {0}, {1}', 'June {0}, {1}', 'July {0}, {1}', 'August {0}, {1}', 'September {0}, {1}', 'October {0}, {1}', 'November {0}, {1}', 'December {0}, {1}']
+
+def longdate_without_year():
+    return ['English', 'January {0}', 'February {0}', 'March {0}', 'April {0}', 'May {0}', 'June {0}', 'July {0}', 'August {0}', 'September {0}', 'October {0}', 'November {0}', 'December {0}']
+
+def shortdate_without_year():
+    return ['English', 'Jan {0}', 'Feb {0}', 'Mar {0}', 'Apr {0}', 'May {0}', 'Jun {0}', 'Jul {0}', 'Aug {0}', 'Sep {0}', 'Oct {0}', 'Nov {0}', 'Dec {0}']

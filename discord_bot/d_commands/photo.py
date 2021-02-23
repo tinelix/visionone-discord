@@ -53,7 +53,7 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
             photo_changed = discord.Embed(title=localization[1][8][3], description=localization[1][8][4], color=embed_color)
             await msg.edit(embed=photo_changed)
     elif args[1] == "-r":
-          subreddits = ['analog', 'wallpaper', 'photo']
+          subreddits = ['wallpaper', 'photo']
           random_sr = subreddits[random.randint(0,len(subreddits) - 1)]
           subreddit = reddit.subreddit(random_sr)
           print(subreddit)
@@ -66,7 +66,7 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
           @bot.event
           async def on_reaction_add(reaction, user):
             if reaction.emoji == "🎲" and user.id != bot.user.id:
-              subreddits = ['analog', 'wallpaper', 'photo']
+              subreddits = ['wallpaper', 'photo']
               random_sr = subreddits[random.randint(0,len(subreddits) - 1)]
               subreddit = reddit.subreddit(random_sr)
               photo = subreddit.random()

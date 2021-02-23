@@ -1,7 +1,7 @@
 async def db_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, connection, cursor):
         args = message.content.split();
         subargs = args[1:]
-        accessdenied_msg = discord.Embed(title="Доступ запрещен", description="Эта команда защищена владельцем бота, поэтому она недоступна.", color=botconfig['accent2'])
+        accessdenied_msg = discord.Embed(description=localization[1][19][0], color=botconfig['accent2'])
         eval_content = discord.Embed(title="Просмотр базы данных", color=botconfig['accent1'])
         if str(message.author.id) != botconfig['owner']:
             return await message.channel.send(embed=accessdenied_msg)

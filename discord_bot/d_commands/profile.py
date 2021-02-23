@@ -1,5 +1,6 @@
 async def get_user(bot, discord, message, botconfig, platform, os, datetime,
-                   one_result, localization, args, unix_time_millis,
+                   one_result, localization, longdate, longdate_without_year, 
+                   shortdate_without_year, args, unix_time_millis,
                    connection, cursor, intents, lastmsgtime, embed_color):
 	try:
 		subargs = args[2]
@@ -21,8 +22,9 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 			for member in message.guild.members:
 				member_name_lower = member.name.lower()
 				if member_name_lower.startswith(" ".join(args[2:]).lower()) or member.name.startswith(" ".join(args[2:])):
-					search_results = 1
-					ids.append(member.id)
+				  if args[2:] != []:
+					  search_results = 1
+					  ids.append(member.id)
 			a_user = await message.guild.fetch_member(ids[0])
 	except:
 		a_user = message.author
@@ -40,7 +42,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	else:
 		bot_detector = ""
 	if a_user.nick == None:
-		nick = "_Отсутствует_"
+		nick = "_(uh, nope)_"
 	else:
 		nick = a_user.nick
 	result = cursor.execute("SELECT * FROM users WHERE userid = " + str(a_user.id) + ";").fetchone(); 
@@ -63,9 +65,13 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		joindate_ms = int(unix_time_millis(a_user.joined_at) + one_result[3])
 		joindate = datetime.datetime.fromtimestamp(
 		(joindate_ms) / 1000)  # 25200000 for UTC+7
+		joindate_list = joindate.timetuple()
+		joindate_format = longdate[joindate_list[1]].format(joindate_list[2], joindate_list[0])
 		regdate_ms = int(unix_time_millis(a_user.created_at) + one_result[3])
 		regdate = datetime.datetime.fromtimestamp(
 		(regdate_ms) / 1000)  # 25200000 for UTC+7
+		regdate_list = regdate.timetuple()
+		regdate_format = longdate[regdate_list[1]].format(regdate_list[2], regdate_list[0])
 	except:
 		pass
 	try:
@@ -78,6 +84,8 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	try:
 		prepostdate = datetime.datetime.fromtimestamp(
 		    (prepostdate_ms) / 1000)  # 25200000 for UTC+7
+		prepostdate_list = regdate.timetuple()
+		prepostdate_format = longdate[prepostdate_list[1]].format(prepostdate_list[2], prepostdate_list[0])
 	except:
 		pass
 	try:
@@ -95,7 +103,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		else:
 			member_roles_a += ""
 	if member_roles_a == "" or member_roles_a == None:
-		member_roles_a = "_Нет_"
+		member_roles_a = "_(nope)_"
 	try:
 		rep = "\n**" + str(localization[1][3][14]) + ": **" + str(one_result[7])
 	except:
@@ -117,7 +125,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		pass
 	userprofile_content.add_field(
 	    name=str(localization[1][3][2]),
-	    value=joindate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" + your_timezone
+	    value=joindate_format + joindate.strftime(" %H:%M:%S") + " (UTC" + your_timezone
 	    + ")",
 	    inline=False)
 	userprofile_content.set_thumbnail(
@@ -127,7 +135,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	try:
 		userprofile_content.add_field(
 	    name=str(localization[1][3][3]),
-	    value=regdate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" + your_timezone +
+	    value=regdate_format + regdate.strftime(" %H:%M:%S") + " (UTC" + your_timezone +
 	    ")",
 	    inline=False)
 	except:
@@ -146,7 +154,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	try:
 		userprofile_content.add_field(
 		    name=str(localization[1][3][13]),
-		    value=prepostdate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" +
+		    value=prepostdate_format + prepostdate.strftime(" %H:%M:%S") + " (UTC" +
 		    your_timezone + ")",
 		    inline=False)
 	except:
@@ -155,7 +163,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	  try:
 		  userprofile_content.add_field(
 			    name=str(localization[1][3][15]),
-			    value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
+			    value="**{0}** ({1}/{2})".format(str(result[9]), str(result[8]), str(((result[9]) * (50 + ((result[9]) * 10)) * (result[9] + 1)))),
 			    inline=False)
 	  except:
 		  pass
@@ -235,7 +243,7 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 				try:
 					userprofile_changed.add_field(
 					name=str(localization[1][3][15]),
-					value="**{0}** ({1}/{2})".format(str(one_result[9]), str(one_result[8]), str(((one_result[9]) * (50 + ((one_result[9]) * 10)) * (one_result[9] + 1)))),
+					value="**{0}** ({1}/{2})".format(str(result[9]), str(result[8]), str(((result[9]) * (50 + ((result[9]) * 10)) * (result[9] + 1)))),
 					inline=False)
 				except:
 					pass
@@ -248,9 +256,6 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 			await msg.edit(embed=userprofile_content)
 		if reaction.emoji == "🖼️" and user.id != bot.user.id:
 			await msg.edit(embed=avatar_content)
-		if reaction.emoji == "🗨️" and user.id != bot.user.id:
-			await msg.edit(embed=userprofile_content)
-
 
 async def get_help(bot, discord, message, botconfig, platform, os, datetime,
                    one_result, localization, args, unix_time_millis,
@@ -275,9 +280,10 @@ async def get_help(bot, discord, message, botconfig, platform, os, datetime,
 	await message.channel.send(embed=profilehelp_content)
 
 
-async def get_guild(bot, discord, message, botconfig, platform, os, datetime,
-                    one_result, localization, args, unix_time_millis,
-                    connection, cursor, guild_result, intents, embed_color):
+async def get_guild(bot, discord, message, botconfig, platform, os, datetime, 
+					one_result, localization, longdate, longdate_without_year, 
+					shortdate_without_year, args, unix_time_millis, connection, 
+					cursor, guild_result, intents, embed_color):
 	if one_result[3] < 0:
 		your_timezone = "-" + str(-round(one_result[3] / 60 / 60 / 1000, 1))
 	if one_result[3] > 0:
@@ -300,6 +306,8 @@ async def get_guild(bot, discord, message, botconfig, platform, os, datetime,
 	    unix_time_millis(message.guild.created_at) + one_result[3])
 	birthdate = datetime.datetime.fromtimestamp(
 	    (birthdate_ms - 25200000) / 1000)  # 25200000 for UTC+7
+	birthdate_list = birthdate.timetuple()
+	birthdate_format = longdate[birthdate_list[1]].format(birthdate_list[2], birthdate_list[0])
 	guildprofile_content = discord.Embed(
 	    title=str(localization[1][4][0]) + str(message.guild.name) + str(
 	        localization[1][4][1]),
@@ -328,20 +336,24 @@ async def get_guild(bot, discord, message, botconfig, platform, os, datetime,
 	else:
 		msgcounter = str(guild_result[2])
 	owner = await message.guild.fetch_member(message.guild.owner_id)
-	guildprofile_content.add_field(
-	    name=str(localization[1][4][2]), value=str(description), inline=False)
+	if description != None or str(description) != "None":
+		guildprofile_content.add_field(
+	    	name=str(localization[1][4][2]), value=str(description), inline=False)
 	guildprofile_content.add_field(
 	    name=str(localization[1][4][3]),
 	    value=str(owner.name + "#" + owner.discriminator),
 	    inline=True)
 	guildprofile_content.add_field(
 	    name=str(localization[1][4][4]),
-	    value=str(
-	        birthdate.strftime("%Y-%m-%d %H:%M:%S") + " (UTC" + your_timezone +
+	    value=birthdate_format + str(
+	        birthdate.strftime(" %H:%M:%S") + " (UTC" + your_timezone +
 	        ")"),
 	    inline=True)
-	guildprofile_content.add_field(
-	    name=str(localization[1][4][16]), value=str(msgcounter), inline=True)
+	try:
+		guildprofile_content.add_field(
+	    	name=str(localization[1][4][16]), value=str(msgcounter), inline=True)
+	except:
+		pass
 	guildprofile_content.add_field(
 	    name=str(localization[1][4][5]),
 	    value=str(localization[1][4][15][0]) + str(

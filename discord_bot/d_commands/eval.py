@@ -1,6 +1,6 @@
 async def eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one_result, localization, en_US, guild_result, intents, embed_color):
         args = message.content.split();
-        accessdenied_msg = discord.Embed(title="Доступ запрещен", description="Эта команда защищена владельцем бота, поэтому она недоступна.", color=botconfig['accent2'])
+        accessdenied_msg = discord.Embed(description=localization[1][19][0], color=botconfig['accent2'])
         eval_content = discord.Embed(title="Определение качества кода", color=botconfig['accent1'])
         eval_content.add_field(name="Листинг", value="```py\n" + " ".join(args[1:]) + "```", inline=False)
         if str(message.author.id) != botconfig['owner']:

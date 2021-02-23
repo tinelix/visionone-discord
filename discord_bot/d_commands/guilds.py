@@ -5,7 +5,11 @@ async def guilds_cmd(bot, discord, message, botconfig, os, platform, datetime, o
         try:
           guild_list = ""
           for bot_guild in bot.guilds:
-            guild_list += str(bot.guilds.index(bot_guild) + 1) + ". " + str(bot_guild.name) + " | Members: " + str(bot_guild.member_count) + "\n"
+            bots_count = 0
+            for member in bot_guild.members:
+              if member.bot == True:
+                bots_count += 1
+            guild_list += str(bot.guilds.index(bot_guild) + 1) + ". " + str(bot_guild.id) + "\nMembers: " + str(bot_guild.member_count) + " | Bots: " + str(bots_count) + "\n"
         except Exception as e:
             guild_list = "Обнаружено исключение!\n" + str(e)
         finally:

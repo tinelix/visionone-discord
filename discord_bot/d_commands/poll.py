@@ -3,7 +3,8 @@ def remove_outer_symbols(s):
     right = s.rindex("]", left)
     return s[:left] + s[left+1:right] + s[right+1:]
 
-async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, unix_time_millis, embed_color, connection, cursor, prefix):
+async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one_result, localization, longdate, longdate_without_year, 
+          shortdate_without_year, unix_time_millis, embed_color, connection, cursor, prefix):
   args = message.content.split(" ");
   args2 = message.content.split("-[]");
   parameter_option = ""
@@ -54,7 +55,8 @@ async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one
           
     option_str = ""
     for opt in options:
-      option_str += emoji_number[str(options.index(opt))] + " " + options[options.index(opt)] + "\n"
+      if options.index(opt) < 9:
+        option_str += emoji_number[str(options.index(opt) + 1)] + " " + options[options.index(opt)] + "\n"
     if args[1] == "" or args[1] == None or args[2] == "" or parameter_option != '-o' or options == [] or args[2] == None or endtimeerr == "Error":
       no_args = discord.Embed(title=localization[1][16][0], description=str(localization[1][16][4]).format(prefix), color=embed_color)
       return await message.channel.send(embed=no_args)
@@ -66,10 +68,14 @@ async def poll_cmd(bot, discord, message, botconfig, platform, os, datetime, one
     connection.commit()
     cursor.execute("SELECT * FROM polls WHERE msgid='" + str(message.id) + "';")
     poll_result = cursor.fetchone()
-    poll_content = discord.Embed(title=question, description=localization[1][16][2].format(str(datetime.datetime.fromtimestamp((poll_result[2] + one_result[3]) / 1000))) + "\n\n" + option_str, color=embed_color)
+    endtime_dt = datetime.datetime.fromtimestamp((poll_result[2] + one_result[3]) / 1000)
+    endtime_list = endtime_dt.timetuple()
+    endtime_format = longdate[endtime_list[1]].format(endtime_list[2], endtime_list[0])
+    poll_content = discord.Embed(title=question, description=localization[1][16][2].format(str(endtime_format) + str(
+          endtime_dt.strftime(" %H:%M")) + "\n\n" + option_str), color=embed_color)
     msg = await message.channel.send(embed=poll_content)
     for opt in options:
-        emoji = emoji_number[str(options.index(opt))]
+        emoji = emoji_number[str(options.index(opt) + 1)]
         await msg.add_reaction(emoji=emoji)
   except Exception as e:
       print(e)
