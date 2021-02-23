@@ -3,11 +3,14 @@
   (<i>Google Translate, i'm sorry</i>: Developed by Tinelix as a replacement for the Highflash bot. Available for now on Discord)<br>
 <i>Лицензируется с условиями GNU Affero General Public License версии 3 для веб-приложений.</i>
 <p><b>Преимущества перед Highflash</b>
-<p>1. Счетчик сообщений
-<br>2. Гибкость настроек (часовые пояса, цвета в Embed-сообщениях, языки, т. д.)
+<br>1. Счетчик сообщений
+<br>2. Гибкость настроек (часовые пояса, цвета в Embed-сообщениях, языки, префиксы, т. д.)
 <br>3. Интеграция БД SQLite с ботом вместо простого JSON
-<br>4. Просмотр рандомных картинок с Unsplash (с оговорками)
-<br>5. Написан на Python с использованием библиотек discord.py и sqlite3
+<br>4. Просмотр рандомных картинок с Unsplash и Reddit
+<br>5. Погода от OpenWeatherMap API.
+<br>6. Система уровней (пока только глобально)
+<br>7. Написан на Python с использованием библиотек discord.py и sqlite3
+<br>8. Аудиоплеер с поддержкой очередей.
 <p><b>Скриншоты</b>
 <p><img src="https://media.discordapp.net/attachments/787270057952542720/798878165325185084/screenshot_001.png" height="256"></img>
 <img src="https://media.discordapp.net/attachments/787270057952542720/798878192193634314/screenshot_002.png" height="256"></img>
