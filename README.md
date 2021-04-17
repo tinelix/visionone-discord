@@ -28,4 +28,4 @@ UNSRDC=[link: https://unsplash.com/developers]</pre>
 <br>6. И наконец-то запускаете.
 <p>Для работы бота в круглосуточном режиме за бесплатно, рекомендуется использовать хостинг репозиториев Repl.it и пинг-сервис Freshping.
 <p>Присутствуют английский и русский языки. Вопросы к работе бота направляйте через Issues.
-<p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер (Add bot to Discord-server)</a> | <a href="https://vk.com/tinelix">Паблик ВК (VK public group)</a> | <a href="https://repl.it/@tinelix/visionbot">"Ночной" альт-репозиторий (Nightly alt-repository)</i></a>
+<p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер (Add bot to Discord-server)</a> | <a href="https://vk.com/tinelix">Паблик ВК (VK public group)</a> | <a href="https://repl.it/@tinelix/visionone-discord">"Ночной" альт-репозиторий (Nightly alt-repository)</i></a>
