@@ -4,19 +4,29 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
   args = message.content.split();
   try:
     if " ".join(args[1:]) == "" or " ".join(args[1:]) == " " or " ".join(args[1:]) == None:
-      no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
+      if reddit != None and unsplash != None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
+      elif unsplash == None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][6]).format(prefix), color=embed_color)
+      elif reddit == None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][7]).format(prefix), color=embed_color)
+      else:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][8]).format(prefix), color=embed_color)
       return await message.channel.send(embed=no_args)
     if args[1] == "-u":
       if time_diff >= 3600000:
-        bot_data = [(0, 0)]
-        cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?)", bot_data)
+        if bot_data_result == None:
+          bot_data = [(0, 0, 300)]
+        else:
+          bot_data = [(0, 0, bot_data_result[2])]
+        cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?, ?)", bot_data)
         connection.commit()
         if bot_data_result[1] >= 20:
           photo_changed = discord.Embed(title=localization[1][8][3], description=localization[1][8][4], color=embed_color)
           return await message.channel.send(embed=photo_changed)
       try:
-        bot_data = [(0, bot_data_result[1] + 1)]
-        cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?)", bot_data)
+        bot_data = [(0, bot_data_result[1] + 1, bot_data_result[2])]
+        cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?, ?)", bot_data)
         connection.commit()
         cursor.execute("SELECT * FROM bot_data WHERE number='" + str(0) + "';")
         bot_data_result2 = cursor.fetchone()
@@ -35,8 +45,8 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
         try:
             cursor.execute("SELECT * FROM bot_data WHERE number='" + str(0) + "';")
             bot_data_result3 = cursor.fetchone()
-            bot_data2 = [(0, bot_data_result3[1] + 1)]
-            cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?)", bot_data2)
+            bot_data2 = [(0, bot_data_result3[1] + 1, bot_data_result[2])]
+            cursor.executemany("INSERT OR REPLACE INTO bot_data VALUES(?, ?, ?)", bot_data2)
             connection.commit()
         except:
             pass
@@ -74,7 +84,15 @@ async def photo_cmd(bot, discord, message, botconfig, os, platform, datetime, on
               photo_changed.add_field(name=str(localization[1][8][1]), value="r/" + str(subreddit.display_name) + " [(Reddit)](https://reddit.com/r/" + str(subreddit.display_name) + ")", inline=True)
               photo_changed.set_image(url=photo.url)
               await msg.edit(embed=photo_changed)
-  except:
-    no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
+  except Exception as e:
+    if reddit != None and unsplash != None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][5]).format(prefix), color=embed_color)
+    elif unsplash == None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][9]).format(prefix), color=embed_color)
+    elif reddit == None:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][10]).format(prefix), color=embed_color)
+    else:
+        no_args = discord.Embed(title=localization[1][8][0], description=str(localization[1][8][8]).format(prefix), color=embed_color)
+    print(e)
     pass
     return await message.channel.send(embed=no_args)

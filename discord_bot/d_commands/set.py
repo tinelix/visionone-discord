@@ -103,6 +103,12 @@ async def set_timezone(bot, discord, message, botconfig, os, platform, datetime,
             user = [(message.author.id, 'Russian', 1, int((subargs / 10) * 60 * 60 * 1000), unix_time_millis(message.created_at), 'Enabled', unix_time_millis(message.created_at), 0, 0, 0)]
         cursor.executemany("INSERT OR REPLACE INTO users VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", user)
         connection.commit()
+        if one_result[3] < 0:
+            your_timezone = "-" + str(-round(one_result[3] / 60 / 60 / 1000, 1))
+        if one_result[3] > 0:
+            your_timezone = "+" + str(round(one_result[3] / 60 / 60 / 1000, 1))
+        if one_result[3] == 0:
+            your_timezone = ""
         timezone_content = discord.Embed(title=str(localization[1][2][3][0]), description=localization[1][2][4][2] + your_timezone, color=botconfig['accent1'])
         await message.channel.send(embed=timezone_content)
 

@@ -1,4 +1,4 @@
-async def get_user(bot, discord, message, botconfig, platform, os, datetime,
+async def get_user(bot, discord, DiscordComponents, Button, ButtonStyle, Select, SelectOption, message, botconfig, platform, os, datetime,
                    one_result, localization, longdate, longdate_without_year, 
                    shortdate_without_year, args, unix_time_millis,
                    connection, cursor, intents, lastmsgtime, embed_color):
@@ -169,18 +169,19 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 		  pass
 	msg = await message.channel.send(embed=userprofile_content)
 	if str(a_user.avatar_url_as(
-	    format=None, static_format="jpeg", size=4096)) != "" or str(
-	        a_user.avatar_url_as(format=None, static_format="jpeg",
+	    format=None, static_format="jpeg", size=4096)) != "" and str(
+	        a_user.avatar_url_as(format=None, static_format="png",
 	                             size=4096)) != None:
 		await msg.add_reaction(emoji="ℹ️")
 		await msg.add_reaction(emoji="🖼️")
+
 	avatar_content = discord.Embed(
 	    title=str(localization[1][3][8]) + str(a_user) + str(
 	        localization[1][3][9]),
 	    color=embed_color)
 	avatar_content.set_image(
 	    url=str(
-	        a_user.avatar_url_as(format=None, static_format="jpeg",
+	        a_user.avatar_url_as(format=None, static_format="png",
 	                             size=4096)))
 	updated = 0
 
@@ -253,9 +254,14 @@ async def get_user(bot, discord, message, botconfig, platform, os, datetime,
 	async def on_reaction_add(reaction, user):
 		channel = reaction.message.channel
 		if reaction.emoji == "ℹ️" and user.id != bot.user.id:
-			await msg.edit(embed=userprofile_content)
+			await msg.edit(embed=userprofile_content, components=[])
 		if reaction.emoji == "🖼️" and user.id != bot.user.id:
-			await msg.edit(embed=avatar_content)
+			try:
+				await msg.edit(embed=avatar_content, components=[
+					Button(style=ButtonStyle.URL, label=localization[1][3][16], url=str(a_user.avatar_url_as(format=None, static_format="png", size=4096)))
+				])
+			except Exception as e:
+				print(e)
 
 async def get_help(bot, discord, message, botconfig, platform, os, datetime,
                    one_result, localization, args, unix_time_millis,

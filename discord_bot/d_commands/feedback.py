@@ -17,15 +17,18 @@ async def feedback_cmd(bot, discord, message, botconfig, os, platform, datetime,
           new_message_content.add_field(name="Attachments", value=attachments_str, inline=True)
       except:
         pass
-    await bot.get_user(int(botconfig['owner'])).send(embed=new_message_content)
+    await bot.get_channel(botconfig['feedback_channel']).send(embed=new_message_content)
     await message.channel.send(embed=feedback_content)
   else:
     try:
-      ch_id = args[1]
-      user_id = args[2]
-      text_id = args[3:]
-      new_message_content = discord.Embed(title=localization[1][10][1], description=localization[1][10][4] + "\"`" + " ".join(args[3:]) + "`\"", color=embed_color)
-      await bot.get_channel(int(ch_id)).send("<@" + user_id + ">")
-      await bot.get_channel(int(ch_id)).send(embed=new_message_content)
+      if args[1] != "-wt":
+        ch_id = args[1]
+        user_id = args[2]
+        text_id = args[3:]
+        new_message_content = discord.Embed(title=localization[1][10][1], description=localization[1][10][4] + "\"`" + " ".join(args[3:]) + "`\"", color=embed_color)
+        await bot.get_channel(int(ch_id)).send("<@" + user_id + ">")
+        await bot.get_channel(int(ch_id)).send(embed=new_message_content)
+      if args[1] == "-wt":
+        waiting_time = args[2]
     except:
       pass

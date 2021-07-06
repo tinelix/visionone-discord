@@ -26,7 +26,12 @@ def get():
                   'Miscellaneous', # 1.0.4.0
                   '`calc`, `weather`, `codec`, `poll`, `rep`, `embed`' # 1.0.4.1
                 ],
-                '**Prefix:** ' # 1.0.5
+                '**Prefix:** ', # 1.0.5
+                [ # 1.0.6
+                    'Requirements', # 1.0.6.0
+                    'Instruction', # 1.0.6.1
+                    'Parameters', # 1.0.6.2
+                ]
             ],
             [ # 1.1
                 'Bot health', # 1.1.0
@@ -135,15 +140,16 @@ def get():
                 '\'s avatar', # 1.3.9
                 'Status', # 1.3.10
                 [ # 1.3.11
-                    '<:online_emoji:786943382651142145> Online',
-                    '<:idle_emoji:786943383721213952> Idle',
-                    '<:dnd_emoji:786943382316253204> Do not disturb',
-                    '<:offline_emoji:786943380085145651> Offline'
+                    '<:online:861861013241856001> Online', # 1.3.11.0
+                    '<:idle:861861016043913216> Idle', # 1.3.11.1
+                    '<:dnd:861861013347106836> DND', # 1.3.11.2
+                    '<:offline:861861010163367947> Offline' # 1.3.11.3
                 ],
                 'Roles ', # 1.3.12
                 'Date of sending the post message', # 1.3.13
                 'Reputation', # 1.3.14
-                'Level' # 1.3.15
+                'Level', # 1.3.15
+                'Avatar link', # 1.3.16
             ],
             [ # 1.4
                 'About ', # 1.4.0 
@@ -216,7 +222,12 @@ def get():
                 'Likes', # 1.8.2
                 'Enough for now!', # 1.8.3
                 'It will be possible to see more photos in exactly an hour, since the Unsplash API has a limit of no more than 50 requests per hour. We apologize for any inconvenience caused.', # 1.8.4
-                '`{0}photo -u` - viewing photos from Unsplash.\n`{0}photo -r` - viewing photos from subreddits.' # 1.8.5
+                '`{0}photo -u` - viewing photos from Unsplash.\n`{0}photo -r` - viewing photos from subreddits.', # 1.8.5
+                '`{0}photo -u` - viewing photos from Unsplash.', # 1.8.6
+                '`{0}photo -r` - viewing photos from subreddits.', # 1.8.7
+                'This command doesn\'t work without acces to two APIs.', # 1.8.8
+                'You cannot view photos without access to Unsplash API. To solve this problem, contact bot author.', # 1.8.9
+                'You cannot view photos without access to Reddit API. To solve this problem, contact bot author.', # 1.8.10
             ],
             [ # 1.9
                 'Calculator', # 1.9.0
@@ -236,7 +247,11 @@ def get():
                 '{0} Bugtracker'.format(name), # 1.10.1
                 'The author bot will reply shortly, please wait...', # 1.10.2
                 'You forgot to provide arguments.\n\n```{0}feedback Hi!```', # 1.10.3
-                'You answered:' # 1.10.4
+                'You answered:', # 1.10.4
+                'Estimated waiting time', # 1.10.5
+                'more than 10 minutes', # 1.10.6
+                '{0} minutes', # 1.10.7
+                'Usually during these hours (after {0} local time) our support service will not be able to send you a reply message.'
             ],
             [ # 1.11
                 'Weather | ', # 1.11.0
@@ -289,8 +304,8 @@ def get():
               'Bots Monitorings', # 1.15.4
               '[bots.server-discord.com](https://bots.server-discord.com/785383439196487720)\n[BotiCord](https://boticord.top/bot/785383439196487720)\n[Bots for Discord](https://botsfordiscord.com/bot/785383439196487720)\n[top.gg](https://top.gg/bot/785383439196487720)\n[discord.bots.gg](https://discord.bots.gg/bots/785383439196487720)', # 1.15.5
               'Links', # 1.15.6
-              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)', # 1.15.7
-              '[Invite](https://discord.com/oauth2/authorize?client_id=769515555765616690&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)\n[Our support server](https://discord.gg/HAt6K2QuJU)'
+              '[Invite](https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionone-discord)\n[Our support server](https://discord.gg/HAt6K2QuJU)', # 1.15.7
+              '[Invite](https://discord.com/oauth2/authorize?client_id=769515555765616690&permissions=8&scope=bot)\n[GitHub](https://github.com/tinelix/visionbot)'
             ],
             [ # 1.16
               'Polling', # 1.16.0

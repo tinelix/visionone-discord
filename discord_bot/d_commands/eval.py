@@ -12,6 +12,6 @@ async def eval_cmd(bot, discord, message, botconfig, os, platform, datetime, one
         finally:
           try:
             eval_content.add_field(name="Результат", value="```" + result + "```", inline=False)
-            await message.channel.send(embed=eval_content) 
+            return await message.channel.send(embed=eval_content) 
           except:
-            await message.channel.send("```" + result + "```")
+            await print("\nEval content:\n" + result + "")
