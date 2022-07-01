@@ -1,5 +1,5 @@
 <h1>VisionOne</h1>
-<p>Разработан Тинеликсом в качестве замены бота Highflash. Доступен на данный момент для Discord.<br>
+<p>Доступен (точнее, был) на данный момент для Discord.<br>
   (<i>Google Translate, i'm sorry</i>: Developed by Tinelix as a replacement for the Highflash bot. Available for now on Discord)<br>
 <i>Лицензируется с условиями GNU Affero General Public License версии 3 для веб-приложений.</i>
 <p><b>Преимущества перед Highflash</b>
