@@ -1,5 +1,5 @@
 <h1>VisionOne</h1>
-<p>Доступен (точнее, был) на данный момент для Discord.<br>
+<p>Доступен (точнее, был до 2021 г.) на данный момент для Discord.<br>
   (<i>Google Translate, i'm sorry</i>: Developed by Tinelix as a replacement for the Highflash bot. Available for now on Discord)<br>
 <i>Лицензируется с условиями GNU Affero General Public License версии 3 для веб-приложений.</i>
 <p><b>Преимущества перед Highflash</b>
@@ -26,6 +26,4 @@ UNSRDC=[link: https://unsplash.com/developers]</pre>
 <br>4. Авторские команды (в кодах вызовы оставлены) можно либо создавать руками, либо удалять с кода.
 <br>5. Пошаманите хоть как-то... Токены в переменные вставьте, если с файлом <code>.env</code> не прокатило.
 <br>6. И наконец-то запускаете.
-<p>Для работы бота в круглосуточном режиме за бесплатно, рекомендуется использовать хостинг репозиториев Repl.it и пинг-сервис Freshping.
-<p>Присутствуют английский и русский языки. Вопросы к работе бота направляйте через Issues.
-<p><i><a href="https://discord.com/api/oauth2/authorize?client_id=785383439196487720&permissions=8&scope=bot">Добавить бота на Discord-сервер (Add bot to Discord-server)</a> | <a href="https://vk.com/tinelix">Паблик ВК (VK public group)</a> | <a href="https://repl.it/@tinelix/visionone-discord">"Ночной" альт-репозиторий (Nightly alt-repository)</i></a>
+<p><p>P. S. На данный момент разработка бота <b>прекращена</b> по понятным причинам.
